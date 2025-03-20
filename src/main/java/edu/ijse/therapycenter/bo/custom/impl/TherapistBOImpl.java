@@ -3,6 +3,7 @@ package edu.ijse.therapycenter.bo.custom.impl;
 import edu.ijse.therapycenter.bo.custom.TherapistBO;
 import edu.ijse.therapycenter.dto.TherapistDTO;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,10 @@ public class TherapistBOImpl implements TherapistBO {
     @Override
     public Optional<String> getLastPK() {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
     }
 }

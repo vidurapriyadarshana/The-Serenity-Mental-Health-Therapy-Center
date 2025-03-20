@@ -3,6 +3,7 @@ package edu.ijse.therapycenter.dao.custom.impl;
 import edu.ijse.therapycenter.dao.custom.TherapistDAO;
 import edu.ijse.therapycenter.entity.Therapist;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,10 @@ public class TherapistDAOImpl implements TherapistDAO {
     @Override
     public Optional<String> getLastPK() {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
     }
 }

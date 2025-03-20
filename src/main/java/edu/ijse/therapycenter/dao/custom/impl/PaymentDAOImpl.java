@@ -3,6 +3,7 @@ package edu.ijse.therapycenter.dao.custom.impl;
 import edu.ijse.therapycenter.dao.custom.PaymentDAO;
 import edu.ijse.therapycenter.entity.Payment;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,10 @@ public class PaymentDAOImpl implements PaymentDAO {
     @Override
     public Optional<String> getLastPK() {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
     }
 }
