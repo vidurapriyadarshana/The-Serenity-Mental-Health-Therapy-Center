@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "therapists")
-public class Therapists {
+public class Therapist implements SuperEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,6 @@ public class Therapists {
     private String specialization;
 
     @OneToMany(mappedBy = "therapist")
-    private List<TherapySessions> therapySessions;
+    private List<TherapySession> therapySessions;
 
 }

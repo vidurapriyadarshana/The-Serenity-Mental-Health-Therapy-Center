@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "therapy_programs")
-public class TherapyPrograms {
+public class TherapyProgram implements SuperEntity{
     @Id
     private String programId;
     private String name;
@@ -23,5 +23,5 @@ public class TherapyPrograms {
     private double fee;
 
     @OneToMany(mappedBy = "therapyProgram")
-    private List<TherapySessions> therapySessions;
+    private List<TherapySession> therapySessions;
 }
