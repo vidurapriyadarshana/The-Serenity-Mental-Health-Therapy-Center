@@ -1,6 +1,9 @@
 package edu.ijse.therapycenter.dao.custom.impl;
 
+import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.UserDAO;
+import edu.ijse.therapycenter.entity.User;
+import org.hibernate.Session;
 import edu.ijse.therapycenter.entity.User;
 
 import java.sql.SQLException;
@@ -8,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
+
+    private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
+
     @Override
     public boolean save(User user) {
         return false;
@@ -35,8 +41,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        Session session = factoryConfiguration.getSession();
+
+        Long lastPk = session
+                .createQuery("SELECT c.id FROM User c ORDER BY c.id DESC", Long.class)
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(lastPk).map(String::valueOf);
     }
+
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {

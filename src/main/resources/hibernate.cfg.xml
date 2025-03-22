@@ -6,7 +6,7 @@
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.connection.url">
-      jdbc:mysql://localhost:3306/serenity_mental_health_therapy_center?createDatabaseIfNotExist=true
+      jdbc:mysql://localhost:3306/therapy_center?createDatabaseIfNotExist=true
     </property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Vidura999@</property>

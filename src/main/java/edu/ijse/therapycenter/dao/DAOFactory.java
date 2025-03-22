@@ -3,12 +3,16 @@ package edu.ijse.therapycenter.dao;
 import edu.ijse.therapycenter.dao.custom.impl.*;
 
 public class DAOFactory {
+
     private static DAOFactory daoFactory;
     private DAOFactory() {
+
     }
+
     public static DAOFactory getInstance() {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
+
     public enum DAOType {
         PATIENT,
         PAYMENT,
@@ -18,6 +22,7 @@ public class DAOFactory {
         THERAPY_SESSION,
         USER
     }
+
     public SuperDAO getDAO(DAOType type) {
         return switch (type) {
             case PATIENT -> new PatientDAOImpl();
@@ -29,4 +34,5 @@ public class DAOFactory {
             case USER -> new UserDAOImpl();
         };
     }
+
 }

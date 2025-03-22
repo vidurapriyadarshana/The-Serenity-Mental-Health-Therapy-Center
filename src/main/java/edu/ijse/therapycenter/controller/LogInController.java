@@ -1,5 +1,7 @@
 package edu.ijse.therapycenter.controller;
 
+import edu.ijse.therapycenter.bo.BOFactory;
+import edu.ijse.therapycenter.bo.custom.impl.PatientBOImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +26,12 @@ public class LogInController {
     @FXML
     private TextField txtPassword;
 
+    private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
+
     @FXML
-    void navHomePage(ActionEvent event) {
-        System.out.println("Home Page");
+    void navHomePage(ActionEvent event) throws IOException {
+        mainAnchor.getChildren().clear();
+        mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/AdminDash.fxml")));
     }
 
     @FXML

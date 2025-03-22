@@ -5,10 +5,14 @@ import edu.ijse.therapycenter.bo.custom.impl.*;
 public class BOFactory {
 
     private static BOFactory boFactory;
-    private BOFactory() {}
+    private BOFactory() {
+
+    }
+
     public static BOFactory getInstance() {
         return boFactory==null?boFactory=new BOFactory():boFactory;
     }
+
     public enum BOType {
         PATIENT,
         PAYMENT,
@@ -28,4 +32,5 @@ public class BOFactory {
             case USER -> new UserBOImpl();
         };
     }
+
 }

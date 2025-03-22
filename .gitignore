@@ -1,6 +1,7 @@
 *.java~
 *.xml~
 *.class
+*.fxml~
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

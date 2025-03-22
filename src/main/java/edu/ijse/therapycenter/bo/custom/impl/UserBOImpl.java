@@ -1,6 +1,8 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.UserBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.UserDAOImpl;
 import edu.ijse.therapycenter.dto.UserDTO;
 
 import java.sql.SQLException;
@@ -8,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserBOImpl implements UserBO {
+
+    private final UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER);
+
     @Override
     public boolean save(UserDTO user) {
         return false;
@@ -35,7 +40,7 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return userDAO.getLastPK();
     }
 
     @Override

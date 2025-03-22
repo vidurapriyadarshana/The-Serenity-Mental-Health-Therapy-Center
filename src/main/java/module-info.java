@@ -6,7 +6,6 @@ module edu.ijse.therapycenter.therapycenter {
     requires jakarta.persistence;
 
     requires java.naming;
-    requires spring.security.crypto;
 
     opens edu.ijse.therapycenter.controller to javafx.fxml;
 
