@@ -14,7 +14,7 @@ public class TherapySession implements SuperEntity{
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String date;
     private String time;
     private String status;

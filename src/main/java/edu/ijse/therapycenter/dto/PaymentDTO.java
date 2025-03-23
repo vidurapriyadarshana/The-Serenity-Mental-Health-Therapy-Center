@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PaymentDTO {
-    private Long id;
+    private String id;
     private double amount;
     private String date;
     private PatientDTO patient;

@@ -72,7 +72,7 @@ public class SignUpController implements Initializable {
         }
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(Long.valueOf(lastId));
+        userDTO.setId(lastId);
         userDTO.setUsername(userName);
         userDTO.setPassword(password);
         userDTO.setRole(role);
@@ -81,6 +81,13 @@ public class SignUpController implements Initializable {
 
         if(result){
             mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogIn.fxml")));
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("User sign up failed");
+            alert.show();
+            return;
         }
     }
 

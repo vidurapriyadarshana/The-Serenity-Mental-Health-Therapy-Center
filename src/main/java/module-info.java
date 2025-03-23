@@ -7,6 +7,7 @@ module edu.ijse.therapycenter.therapycenter {
 
     requires java.naming;
     requires modelmapper;
+    requires bcrypt;
 
     opens edu.ijse.therapycenter.controller to javafx.fxml;
 

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Payment implements SuperEntity{
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private double amount;
     private String date;
 
