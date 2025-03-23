@@ -34,7 +34,6 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-
     @Override
     public boolean update(User user) {
         return false;
@@ -89,9 +88,54 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    @Override
+    public boolean cheackUser(String userName) {
+        Session session = null;
+        try {
+            session = factoryConfiguration.getSession();
+
+            String username = session.createQuery("SELECT u.username FROM User u WHERE u.username = :username", String.class)
+                    .setParameter("username", userName)
+                    .uniqueResult();
+
+            return username != null;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public User getSelectUser(String userName) {
+        Session session = null;
+        try {
+            session = factoryConfiguration.getSession();
+
+            User user = session.createQuery("FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", userName)
+                    .uniqueResult();
+
+            System.out.println(user.getPassword());
+            System.out.println(user);
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
 }

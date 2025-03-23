@@ -17,6 +17,8 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean save(UserDTO user) {
+        String password = PasswordUtils.hashPassword(user.getPassword());
+        user.setPassword(password);
         User userEntity = toUser(user);
         return userDAO.save(userEntity);
     }
@@ -51,36 +53,31 @@ public class UserBOImpl implements UserBO {
         return false;
     }
 
+    @Override
+    public boolean cheackUser(String userName) {
+        return userDAO.cheackUser(userName);
+    }
+
+    @Override
+    public UserDTO cheackPassword(String userName) {
+        User user = userDAO.getSelectUser(userName);
+        return toUserDTO(user);
+    }
+
     public static UserDTO toUserDTO(User user) {
-        String hashedPassword = PasswordUtils.hashPassword(user.getPassword());
-
-        System.out.println("Hashed Password: " + hashedPassword);
-
-        if (user == null) {
-            return null;
-        }
-
         return new UserDTO(
                 user.getId(),
                 user.getUsername(),
-                hashedPassword,
+                user.getPassword(),
                 user.getRole()
         );
     }
 
-
     public static User toUser(UserDTO userDTO) {
-        String hashedPassword = PasswordUtils.hashPassword(userDTO.getPassword());
-
-        System.out.println("Hashed Password: " + hashedPassword);
-
-        if (userDTO == null) {
-            return null;
-        }
         return new User(
                 userDTO.getId(),
                 userDTO.getUsername(),
-                hashedPassword,
+                userDTO.getPassword(),
                 userDTO.getRole()
         );
     }

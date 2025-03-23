@@ -71,6 +71,11 @@ public class SignUpController implements Initializable {
             return;
         }
 
+        if(userBO.cheackUser(userName)){
+            lblError.setText("User already exist");
+            return;
+        }
+
         UserDTO userDTO = new UserDTO();
         userDTO.setId(lastId);
         userDTO.setUsername(userName);
