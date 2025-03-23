@@ -2,19 +2,17 @@ package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
 import edu.ijse.therapycenter.bo.custom.impl.UserBOImpl;
+import edu.ijse.therapycenter.dto.UserDTO;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
@@ -26,16 +24,10 @@ public class SignUpController implements Initializable {
     private ChoiceBox<String> choiceRole;
 
     @FXML
-    private Text lblID;
-
-    @FXML
     private AnchorPane mainAnchor;
 
     @FXML
     private PasswordField txtConfirmPassword;
-
-    @FXML
-    private Text txtDisplayUserID;
 
     @FXML
     private PasswordField txtPassword;
@@ -43,18 +35,57 @@ public class SignUpController implements Initializable {
     @FXML
     private TextField txtUserName;
 
+    @FXML
+    private Label lblError;
+
     private final UserBOImpl userBO = (UserBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     @FXML
-    void navLogInPage(MouseEvent event) throws IOException {
-        mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogIn.fxml")));
+    void navLogInPage(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+
+        String userName = txtUserName.getText();
+        String password = txtPassword.getText();
+        String role = choiceRole.getValue();
+        String confirmPassword = txtConfirmPassword.getText();
+
+        String lastId = userBO.getLastPK().orElse("U001");
+
+        System.out.println(lastId);
+        System.out.println(userName);
+        System.out.println(password);
+        System.out.println(role);
+        System.out.println(confirmPassword);
+
+        if(userName.isEmpty() || password.isEmpty() || role.isEmpty() || confirmPassword.isEmpty()){
+            lblError.setText("Please fill all the fields");
+            return;
+        }
+
+        if(password.length() < 8){
+            lblError.setText("Password must be at least 8 characters");
+            return;
+        }
+
+        if(!password.equals(confirmPassword)){
+            lblError.setText("Password does not match");
+            return;
+        }
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(Long.valueOf(lastId));
+        userDTO.setUsername(userName);
+        userDTO.setPassword(password);
+        userDTO.setRole(role);
+
+        boolean result = userBO.save(userDTO);
+
+        if(result){
+            mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogIn.fxml")));
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceRole.getItems().addAll("Admin", "Receptionist");
-
-        String lastPK = userBO.getLastPK().orElse("U001");
-        lblID.setText(lastPK);
     }
 }

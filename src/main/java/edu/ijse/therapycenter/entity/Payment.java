@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "payments")
 public class Payment implements SuperEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double amount;
     private String date;

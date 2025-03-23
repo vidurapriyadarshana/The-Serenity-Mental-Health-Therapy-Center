@@ -4,6 +4,8 @@ import edu.ijse.therapycenter.bo.custom.UserBO;
 import edu.ijse.therapycenter.dao.DAOFactory;
 import edu.ijse.therapycenter.dao.custom.impl.UserDAOImpl;
 import edu.ijse.therapycenter.dto.UserDTO;
+import edu.ijse.therapycenter.entity.User;
+import edu.ijse.therapycenter.util.ConverterUtil;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +17,8 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean save(UserDTO user) {
-        return false;
+        User userEntity = toUser(user);
+        return userDAO.save(userEntity);
     }
 
     @Override
@@ -47,4 +50,29 @@ public class UserBOImpl implements UserBO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    public static UserDTO toUserDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+        return new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getRole()
+        );
+    }
+
+    public static User toUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            return null;
+        }
+        return new User(
+                userDTO.getId(),
+                userDTO.getUsername(),
+                userDTO.getPassword(),
+                userDTO.getRole()
+        );
+    }
+
 }

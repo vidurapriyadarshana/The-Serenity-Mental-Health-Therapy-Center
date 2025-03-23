@@ -4,7 +4,7 @@ import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.UserDAO;
 import edu.ijse.therapycenter.entity.User;
 import org.hibernate.Session;
-import edu.ijse.therapycenter.entity.User;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,8 +16,24 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean save(User user) {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            session.persist(user);
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public boolean update(User user) {
@@ -41,14 +57,36 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<String> getLastPK() {
+//        Session session = factoryConfiguration.getSession();
+//
+//        Long lastPk = session
+//                .createQuery("SELECT c.id FROM User c ORDER BY c.id DESC", Long.class)
+//                .setMaxResults(1)
+//                .uniqueResult();
+//
+//        return Optional.ofNullable(lastPk).map(String::valueOf);
+
         Session session = factoryConfiguration.getSession();
 
-        Long lastPk = session
-                .createQuery("SELECT c.id FROM User c ORDER BY c.id DESC", Long.class)
-                .setMaxResults(1)
-                .uniqueResult();
+        try {
+            Long lastPk = session
+                    .createQuery("SELECT u.id FROM User u ORDER BY u.id DESC", Long.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
 
-        return Optional.ofNullable(lastPk).map(String::valueOf);
+            Long newPk = (lastPk != null) ? lastPk + 1 : 1;
+
+            return Optional.of(String.valueOf(newPk));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
     }
 
 

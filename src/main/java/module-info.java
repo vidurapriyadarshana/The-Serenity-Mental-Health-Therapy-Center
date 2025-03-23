@@ -6,6 +6,7 @@ module edu.ijse.therapycenter.therapycenter {
     requires jakarta.persistence;
 
     requires java.naming;
+    requires modelmapper;
 
     opens edu.ijse.therapycenter.controller to javafx.fxml;
 
