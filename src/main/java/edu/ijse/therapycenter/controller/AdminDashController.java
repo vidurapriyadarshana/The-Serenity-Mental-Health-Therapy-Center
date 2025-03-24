@@ -3,6 +3,7 @@ package edu.ijse.therapycenter.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -11,6 +12,18 @@ public class AdminDashController {
 
     @FXML
     private AnchorPane loadPageAnchor;
+
+    @FXML
+    private Label patientsCount;
+
+    @FXML
+    private Label programsCount;
+
+    @FXML
+    private Label sessionsCount;
+
+    @FXML
+    private Label therapistsCount;
 
     @FXML
     void navAppoinments(ActionEvent event) {
@@ -25,13 +38,13 @@ public class AdminDashController {
     @FXML
     void navDash(ActionEvent event) throws IOException {
         loadPageAnchor.getChildren().clear();
-        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/TherapyManage.fxml")));
-
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml")));
     }
 
     @FXML
-    void navPatitnt(ActionEvent event) {
-
+    void navPatitnt(ActionEvent event) throws IOException {
+        loadPageAnchor.getChildren().clear();
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Patient.fxml")));
     }
 
     @FXML
@@ -45,8 +58,9 @@ public class AdminDashController {
     }
 
     @FXML
-    void navTherapist(ActionEvent event) {
-
+    void navTherapist(ActionEvent event) throws IOException {
+        loadPageAnchor.getChildren().clear();
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/TherapyManage.fxml")));
     }
 
 }

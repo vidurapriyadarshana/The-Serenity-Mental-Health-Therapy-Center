@@ -19,6 +19,8 @@ public class Patient implements SuperEntity{
     private String id;
     private String name;
     private String contactInfo;
+    private String gender;
+    private String birthDate;
 
     @OneToMany(mappedBy = "patient")
     private List<TherapySession> therapySessions;

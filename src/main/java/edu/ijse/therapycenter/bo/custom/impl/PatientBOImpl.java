@@ -1,16 +1,23 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.PatientBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.PatientDAOImpl;
 import edu.ijse.therapycenter.dto.PatientDTO;
+import edu.ijse.therapycenter.entity.Patient;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class PatientBOImpl implements PatientBO {
+
+    private final PatientDAOImpl patientDAO = (PatientDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PATIENT);
+
     @Override
     public boolean save(PatientDTO patient) {
-        return false;
+        Patient patientDTO = toEntity(patient);
+        return patientDAO.save(patientDTO);
     }
 
     @Override
@@ -35,11 +42,38 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return patientDAO.getLastPK();
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
+    }
+
+    public static PatientDTO toDTO(Patient patient) {
+        if (patient == null) {
+            return null;
+        }
+        return new PatientDTO(
+                patient.getId(),
+                patient.getName(),
+                patient.getContactInfo(),
+                patient.getGender(),
+                patient.getBirthDate()
+        );
+    }
+
+    public static Patient toEntity(PatientDTO patientDTO) {
+        if (patientDTO == null) {
+            return null;
+        }
+        return new Patient(
+                patientDTO.getId(),
+                patientDTO.getName(),
+                patientDTO.getContactInfo(),
+                patientDTO.getGender(),
+                patientDTO.getBirthDate(),
+                null
+        );
     }
 }
