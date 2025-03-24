@@ -23,7 +23,8 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public boolean update(PatientDTO patient) {
-        return false;
+        Patient patientDTO = toEntity(patient);
+        return patientDAO.update(patientDTO);
     }
 
     @Override

@@ -171,6 +171,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -313,11 +314,17 @@ public class PatientController implements Initializable {
             txtContact.setText(selectedPatient.getContactInfo());
             cmbGender.setValue(selectedPatient.getGender());
 
-            if (selectedPatient.getBirthDate() != null) {
+
+            dpRegDate.setDisable(true);
+
+            if (selectedPatient.getBirthDate() != null && !selectedPatient.getBirthDate().isEmpty()) {
                 dpRegDate.setValue(LocalDate.parse(selectedPatient.getBirthDate()));
+            } else {
+                dpRegDate.setValue(null);
             }
         }
     }
+
 
 
     @FXML
@@ -327,11 +334,57 @@ public class PatientController implements Initializable {
         cmbGender.setValue(null);
         dpRegDate.setValue(null);
         lblPatientId.setText(id);
+        dpRegDate.setDisable(false);
     }
 
     @FXML
     void updatePatient(ActionEvent event) {
+        String id = lblPatientId.getText();
 
+        String name = txtName.getText();
+
+        String contact = txtContact.getText();
+        String regex = "^07\\d{8}$";
+
+        String gender = cmbGender.getValue();
+
+        String regDate = dpRegDate.getValue().toString();
+
+
+        if(name.isEmpty() || contact.isEmpty() || gender.isEmpty() || regDate.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all the fields");
+            alert.show();
+            return;
+        }
+
+        if (contact.matches(regex)) {
+
+            PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setId(id);
+            patientDTO.setName(name);
+            patientDTO.setContactInfo(contact);
+            patientDTO.setGender(gender);
+            patientDTO.setBirthDate(regDate);
+
+            boolean isUpdated = patientBO.update(patientDTO);
+
+            if (isUpdated) {
+                loadPatientTable();
+            } else {
+                System.out.println("Failed to update patient");
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid contact number");
+            alert.show();
+            return;
+        }
     }
 
     @Override
@@ -339,7 +392,6 @@ public class PatientController implements Initializable {
         cmbGender.getItems().addAll("Male", "Female");
         this.id = String.valueOf(patientBO.getLastPK().orElse("Error"));
         lblPatientId.setText(id);
-
 
 
         colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));

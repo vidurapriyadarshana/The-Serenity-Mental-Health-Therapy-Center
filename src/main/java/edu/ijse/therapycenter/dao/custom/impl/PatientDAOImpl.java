@@ -38,8 +38,24 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public boolean update(Patient patient) {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            session.merge (patient);
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
