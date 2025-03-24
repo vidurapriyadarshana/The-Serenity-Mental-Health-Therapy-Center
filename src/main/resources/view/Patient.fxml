@@ -88,12 +88,12 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Birth Date" textFill="#2c3e50">
+                                        <Label prefWidth="80.0" text="Reg. Date" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <DatePicker fx:id="dpRegDate" prefHeight="30.0" prefWidth="220.0" promptText="Select birth date" />
+                                        <DatePicker fx:id="dpRegDate" prefHeight="30.0" prefWidth="220.0" promptText="Select Reg. Date" />
                                     </children>
                                 </HBox>
                             </children>
@@ -148,7 +148,7 @@
                         <TableColumn fx:id="colName" prefWidth="200.0" text="Name" />
                         <TableColumn fx:id="colContact" prefWidth="150.0" text="Contact" />
                         <TableColumn fx:id="colGender" prefWidth="100.0" text="Gender" />
-                        <TableColumn fx:id="colRegDate" prefWidth="150.0" text="Birth Date" />
+                        <TableColumn fx:id="colRegDate" prefWidth="150.0" text="Reg. Date" />
                     </columns>
                     <VBox.margin>
                         <Insets />

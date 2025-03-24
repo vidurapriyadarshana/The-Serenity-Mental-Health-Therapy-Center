@@ -178,6 +178,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -296,8 +297,20 @@ public class PatientController implements Initializable {
 
     @FXML
     void petientSelectOnAction(MouseEvent event) {
+        PatientDTO selectedPatient = tblPatients.getSelectionModel().getSelectedItem();
 
+        if (selectedPatient != null) {
+            lblPatientId.setText(selectedPatient.getId());
+            txtName.setText(selectedPatient.getName());
+            txtContact.setText(selectedPatient.getContactInfo());
+            cmbGender.setValue(selectedPatient.getGender());
+
+            if (selectedPatient.getBirthDate() != null) {
+                dpRegDate.setValue(LocalDate.parse(selectedPatient.getBirthDate()));
+            }
+        }
     }
+
 
     @FXML
     void resetForm(ActionEvent event) {
@@ -328,10 +341,9 @@ public class PatientController implements Initializable {
     }
 
     private void loadPatientTable() {
-        // Fetch all patients
+
         List<PatientDTO> patientList = patientBO.getAll();
 
-        // Debug: Print patient details to console
         for (PatientDTO patient : patientList) {
             System.out.println("ID: " + patient.getId());
             System.out.println("Name: " + patient.getName());
@@ -341,10 +353,8 @@ public class PatientController implements Initializable {
             System.out.println("-------------------------------");
         }
 
-        // Convert List<PatientDTO> to ObservableList
         ObservableList<PatientDTO> patientTMS = FXCollections.observableArrayList(patientList);
 
-        // Bind data to TableView
         tblPatients.setItems(patientTMS);
     }
 
