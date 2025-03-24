@@ -28,7 +28,7 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        return patientDAO.deleteByPK(pk);
     }
 
     @Override

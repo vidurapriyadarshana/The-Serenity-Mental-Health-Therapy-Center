@@ -43,8 +43,29 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            Patient patient = session.get(Patient.class, pk);
+            if (patient != null) {
+                session.delete(patient);
+            } else {
+                return false;
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public List<Patient> getAll() {

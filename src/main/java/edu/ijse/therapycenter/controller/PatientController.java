@@ -284,6 +284,7 @@ public class PatientController implements Initializable {
             cmbGender.setValue(null);
             dpRegDate.setValue(null);
             this.id = String.valueOf(patientBO.getLastPK().orElse("Error"));
+            loadPatientTable();
         } else {
             System.out.println("Failed to save patient");
         }
@@ -291,8 +292,15 @@ public class PatientController implements Initializable {
     }
 
     @FXML
-    void deletePatient(ActionEvent event) {
+    void deletePatient(ActionEvent event) throws Exception {
+        String id = lblPatientId.getText();
+        boolean isDeleted = patientBO.deleteByPK(id);
 
+        if (isDeleted) {
+            loadPatientTable();
+        } else {
+            System.out.println("Failed to delete patient");
+        }
     }
 
     @FXML
@@ -314,7 +322,11 @@ public class PatientController implements Initializable {
 
     @FXML
     void resetForm(ActionEvent event) {
-
+        txtName.clear();
+        txtContact.clear();
+        cmbGender.setValue(null);
+        dpRegDate.setValue(null);
+        lblPatientId.setText(id);
     }
 
     @FXML
