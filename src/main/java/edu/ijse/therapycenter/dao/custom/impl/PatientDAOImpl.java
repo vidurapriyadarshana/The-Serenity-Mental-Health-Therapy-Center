@@ -5,8 +5,10 @@ import edu.ijse.therapycenter.dao.custom.PatientDAO;
 import edu.ijse.therapycenter.entity.Patient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +48,14 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public List<Patient> getAll() {
-        return List.of();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("FROM Patient", Patient.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
+
 
     @Override
     public Optional<Patient> findByPK(String pk) {

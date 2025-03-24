@@ -7,6 +7,7 @@ import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.entity.Patient;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +33,21 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public List<PatientDTO> getAll() {
-        return List.of();
+        List<PatientDTO> users = new ArrayList<>();
+        List<Patient> all = patientDAO.getAll();
+        for (Patient patient : all) {
+            users.add(new PatientDTO(
+                    patient.getId(),
+                    patient.getName(),
+                    patient.getContactInfo(),
+                    patient.getGender(),
+                    patient.getBirthDate()
+            ));
+        }
+        return users;
     }
+
+
 
     @Override
     public Optional<PatientDTO> findByPK(String pk) {
