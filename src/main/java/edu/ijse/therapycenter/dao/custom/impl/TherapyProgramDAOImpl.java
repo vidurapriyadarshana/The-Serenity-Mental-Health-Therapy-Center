@@ -2,10 +2,13 @@ package edu.ijse.therapycenter.dao.custom.impl;
 
 import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.TherapyProgramDAO;
+import edu.ijse.therapycenter.entity.Patient;
 import edu.ijse.therapycenter.entity.TherapyProgram;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +18,22 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
 
     @Override
     public boolean save(TherapyProgram therapyProgram) {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            session.persist(therapyProgram);
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -30,7 +48,12 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
 
     @Override
     public List<TherapyProgram> getAll() {
-        return List.of();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("FROM TherapyProgram ", TherapyProgram.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     @Override

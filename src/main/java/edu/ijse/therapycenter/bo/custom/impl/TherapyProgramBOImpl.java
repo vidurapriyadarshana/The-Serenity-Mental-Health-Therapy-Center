@@ -3,10 +3,13 @@ package edu.ijse.therapycenter.bo.custom.impl;
 import edu.ijse.therapycenter.bo.custom.TherapyProgramBO;
 import edu.ijse.therapycenter.dao.DAOFactory;
 import edu.ijse.therapycenter.dao.custom.impl.TherapyProgramDAOImpl;
+import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;
+import edu.ijse.therapycenter.entity.Patient;
 import edu.ijse.therapycenter.entity.TherapyProgram;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +19,8 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
 
     @Override
     public boolean save(TherapyProgramDTO therapyProgram) {
-        return false;
+        TherapyProgram therapyProgramEntity = convertToEntity(therapyProgram);
+        return therapyProgramDAO.save(therapyProgramEntity);
     }
 
     @Override
@@ -31,7 +35,17 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
 
     @Override
     public List<TherapyProgramDTO> getAll() {
-        return List.of();
+        List<TherapyProgramDTO> users = new ArrayList<>();
+        List<TherapyProgram> all = therapyProgramDAO.getAll();
+        for (TherapyProgram therapyProgram : all) {
+            users.add(new TherapyProgramDTO(
+                    therapyProgram.getProgramId(),
+                    therapyProgram.getName(),
+                    therapyProgram.getDuration(),
+                    therapyProgram.getFee()
+            ));
+        }
+        return users;
     }
 
     @Override
@@ -48,4 +62,30 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    public static TherapyProgramDTO convertToDTO(TherapyProgram entity) {
+        if (entity == null) {
+            return null;
+        }
+        return new TherapyProgramDTO(
+                entity.getProgramId(),
+                entity.getName(),
+                entity.getDuration(),
+                entity.getFee()
+        );
+    }
+
+    public static TherapyProgram convertToEntity(TherapyProgramDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new TherapyProgram(
+                dto.getProgramId(),
+                dto.getName(),
+                dto.getDuration(),
+                dto.getFee(),
+                null
+        );
+    }
+
 }
