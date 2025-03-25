@@ -1,6 +1,8 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.TherapyProgramBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.TherapyProgramDAOImpl;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;
 import edu.ijse.therapycenter.entity.TherapyProgram;
 
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class TherapyProgramBOImpl implements TherapyProgramBO {
+
+    private final TherapyProgramDAOImpl therapyProgramDAO = (TherapyProgramDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPY_PROGRAM);
 
     @Override
     public boolean save(TherapyProgramDTO therapyProgram) {
@@ -37,7 +41,7 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return therapyProgramDAO.getLastPK();
     }
 
     @Override

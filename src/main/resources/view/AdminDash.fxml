@@ -61,7 +61,7 @@
                                 <Insets left="20.0" />
                             </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navSessions" prefHeight="45.0" style="-fx-background-color: transparent;" text="Sessions" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPrograms" prefHeight="45.0" style="-fx-background-color: transparent;" text="Programs" textFill="WHITE">
                             <font>
                                 <Font size="12.0" />
                             </font>

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class TherapySessionDTO {
-    private Long id;
+    private String id;
     private String date;
     private String time;
     private String status;
