@@ -94,6 +94,10 @@ public class TherapistController implements Initializable {
         boolean isDeleted = therapistBO.deleteByPK(id);
 
         if (isDeleted) {
+            txtName.clear();
+            txtSpecialization.clear();
+            txtSpecialization.setDisable(false);
+            lblTherapistId.setText(id);
             loadTherapistTable();
         } else {
             System.out.println("Failed to delete therapist");

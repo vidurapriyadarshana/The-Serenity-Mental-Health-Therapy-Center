@@ -132,6 +132,12 @@ public class PatientController implements Initializable {
         boolean isDeleted = patientBO.deleteByPK(id);
 
         if (isDeleted) {
+            txtName.clear();
+            txtContact.clear();
+            cmbGender.setValue(null);
+            dpRegDate.setValue(null);
+            lblPatientId.setText(id);
+            dpRegDate.setDisable(false);
             loadPatientTable();
         } else {
             System.out.println("Failed to delete patient");

@@ -99,14 +99,29 @@ public class TherapyProgramController implements Initializable {
             txtName.clear();
             txtDuration.clear();
             txtFee.clear();
+
+            loadTherapyProgramTable();
         }else{
             errorMessage.setText("Failed to add Therapy Program");
         }
     }
 
     @FXML
-    void deleteTherapyProgram(ActionEvent event) {
+    void deleteTherapyProgram(ActionEvent event) throws Exception {
+        String id = lblProgramId.getText();
+        boolean isDeleted = therapyProgramBO.deleteByPK(id);
 
+        if (isDeleted) {
+            txtName.clear();
+            txtDuration.clear();
+            txtFee.clear();
+            errorMessage.setText("");
+            selectTime.setValue(null);
+            lblProgramId.setText(this.id);
+            loadTherapyProgramTable();
+        } else {
+            System.out.println("Failed to delete patient");
+        }
     }
 
     @FXML
@@ -137,7 +152,37 @@ public class TherapyProgramController implements Initializable {
 
     @FXML
     void updateTherapyProgram(ActionEvent event) {
+        String id = lblProgramId.getText();
+        String name = txtName.getText();
+        String duration = txtDuration.getText() + " " + selectTime.getValue();
+        String fee = txtFee.getText();
 
+        if(name.isEmpty() || duration.isEmpty() || fee.isEmpty()){
+            errorMessage.setText("Please fill all fields");
+            return;
+        }
+
+        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
+        therapyProgramDTO.setProgramId(id);
+        therapyProgramDTO.setName(name);
+        therapyProgramDTO.setDuration(duration);
+        therapyProgramDTO.setFee(Double.parseDouble(fee));
+
+        boolean isUpdated = therapyProgramBO.update(therapyProgramDTO);
+
+        if(isUpdated){
+            errorMessage.setText("Therapy Program updated successfully");
+            this.id = therapyProgramBO.getLastPK().orElse("0");
+            lblProgramId.setText(this.id);
+            txtName.clear();
+            txtDuration.clear();
+            txtFee.clear();
+            selectTime.setValue(null);
+
+            loadTherapyProgramTable();
+        }else{
+            errorMessage.setText("Failed to update Therapy Program");
+        }
     }
 
     @Override

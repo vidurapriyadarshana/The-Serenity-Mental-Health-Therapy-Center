@@ -25,12 +25,13 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
 
     @Override
     public boolean update(TherapyProgramDTO therapyProgram) {
-        return false;
+        TherapyProgram therapyProgramEntity = toEntity(therapyProgram);
+        return therapyProgramDAO.update(therapyProgramEntity);
     }
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        return therapyProgramDAO.deleteByPK(pk);
     }
 
     @Override
@@ -85,6 +86,31 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 dto.getDuration(),
                 dto.getFee(),
                 null
+        );
+    }
+
+    public static TherapyProgram toEntity(TherapyProgramDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new TherapyProgram(
+                dto.getProgramId(),
+                dto.getName(),
+                dto.getDuration(),
+                dto.getFee(),
+                null
+        );
+    }
+
+    public static TherapyProgramDTO toDTO(TherapyProgram entity) {
+        if (entity == null) {
+            return null;
+        }
+        return new TherapyProgramDTO(
+                entity.getProgramId(),
+                entity.getName(),
+                entity.getDuration(),
+                entity.getFee()
         );
     }
 

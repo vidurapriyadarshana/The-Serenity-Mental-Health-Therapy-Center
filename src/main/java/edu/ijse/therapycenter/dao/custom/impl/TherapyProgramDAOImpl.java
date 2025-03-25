@@ -38,12 +38,47 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
 
     @Override
     public boolean update(TherapyProgram therapyProgram) {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            session.merge (therapyProgram);
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = factoryConfiguration.getSession()) {
+            transaction = session.beginTransaction();
+
+            TherapyProgram therapyProgram = session.get(TherapyProgram.class, pk);
+            if (therapyProgram != null) {
+                session.remove(therapyProgram);
+            } else {
+                return false;
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
