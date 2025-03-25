@@ -66,7 +66,7 @@ public class PatientDAOImpl implements PatientDAO {
 
             Patient patient = session.get(Patient.class, pk);
             if (patient != null) {
-                session.delete(patient);
+                session.remove(patient);
             } else {
                 return false;
             }

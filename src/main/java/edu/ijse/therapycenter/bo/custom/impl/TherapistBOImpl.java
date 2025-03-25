@@ -1,31 +1,51 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.TherapistBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.TherapistDAOImpl;
+import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapistDTO;
+import edu.ijse.therapycenter.entity.Patient;
+import edu.ijse.therapycenter.entity.Therapist;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class TherapistBOImpl implements TherapistBO {
+
+    private final TherapistDAOImpl therapistDAO = (TherapistDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPIST);
+
     @Override
     public boolean save(TherapistDTO therapist) {
-        return false;
+        Therapist therapistEntity = toEntity(therapist);
+        return therapistDAO.save(therapistEntity);
     }
 
     @Override
     public boolean update(TherapistDTO therapist) {
-        return false;
+        Therapist therapistEntity = toEntity(therapist);
+        return therapistDAO.update(therapistEntity);
     }
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        return therapistDAO.deleteByPK(pk);
     }
 
     @Override
     public List<TherapistDTO> getAll() {
-        return List.of();
+        List<TherapistDTO> users = new ArrayList<>();
+        List<Therapist> all = therapistDAO.getAll();
+        for (Therapist therapist : all) {
+            users.add(new TherapistDTO(
+                    therapist.getId(),
+                    therapist.getName(),
+                    therapist.getSpecialization()
+            ));
+        }
+        return users;
     }
 
     @Override
@@ -35,11 +55,34 @@ public class TherapistBOImpl implements TherapistBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return therapistDAO.getLastPK();
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
+    }
+
+    public static TherapistDTO toDTO(Therapist therapist) {
+        if (therapist == null) {
+            return null;
+        }
+        return new TherapistDTO(
+                therapist.getId(),
+                therapist.getName(),
+                therapist.getSpecialization()
+        );
+    }
+
+    public static Therapist toEntity(TherapistDTO therapistDTO) {
+        if (therapistDTO == null) {
+            return null;
+        }
+        return new Therapist(
+                therapistDTO.getId(),
+                therapistDTO.getName(),
+                therapistDTO.getSpecialization(),
+                null
+        );
     }
 }
