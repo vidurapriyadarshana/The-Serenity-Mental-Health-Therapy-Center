@@ -5,6 +5,7 @@ import edu.ijse.therapycenter.dto.TherapistDTO;
 import edu.ijse.therapycenter.entity.Therapist;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +18,5 @@ public interface TherapistBO extends SuperBO {
     Optional<TherapistDTO> findByPK(String pk);
     Optional<String> getLastPK();
     boolean exist(String id) throws SQLException, ClassNotFoundException;
-
+    ArrayList<String> getTherapistList();
 }

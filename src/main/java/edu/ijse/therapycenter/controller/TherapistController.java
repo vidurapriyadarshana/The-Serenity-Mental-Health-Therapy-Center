@@ -83,6 +83,7 @@ public class TherapistController implements Initializable {
             txtName.clear();
             txtSpecialization.clear();
             this.id = String.valueOf(therapistBO.getLastPK().orElse("Error"));
+            loadTherapistTable();
         }else{
             errorMessage.setText("Failed to add therapist");
         }
