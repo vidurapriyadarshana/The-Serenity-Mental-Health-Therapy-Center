@@ -1,11 +1,8 @@
 package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
-import edu.ijse.therapycenter.bo.custom.impl.TherapistBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.TherapyProgramBOImpl;
-import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;
-import edu.ijse.therapycenter.entity.TherapyProgram;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,6 +32,9 @@ public class TherapyProgramController implements Initializable {
     private Button btnUpdate;
 
     @FXML
+    private ChoiceBox<?> selectTherapist;
+
+    @FXML
     private TableColumn<TherapyProgramDTO, String> colDuration;
 
     @FXML
@@ -46,6 +45,9 @@ public class TherapyProgramController implements Initializable {
 
     @FXML
     private TableColumn<TherapyProgramDTO, String> colProgramId;
+
+    @FXML
+    private TableColumn<TherapyProgramDTO, String> colTherapist;
 
     @FXML
     private Label errorMessage;

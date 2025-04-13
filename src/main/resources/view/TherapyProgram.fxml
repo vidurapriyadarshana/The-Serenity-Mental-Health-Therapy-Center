@@ -59,7 +59,7 @@
                                             </font>
                                         </Label>
                                         <TextField fx:id="txtDuration" prefHeight="25.0" prefWidth="182.0" promptText="Enter program duration" />
-                              <ChoiceBox fx:id="selectTime" prefHeight="25.0" prefWidth="86.0" />
+                                        <ChoiceBox fx:id="selectTime" prefHeight="25.0" prefWidth="86.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
@@ -84,6 +84,16 @@
                                             </font>
                                         </Label>
                                         <TextField fx:id="txtName" prefHeight="30.0" prefWidth="220.0" promptText="Enter program name" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="80.0" text="Therapist:" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="selectTherapist" prefHeight="30.0" prefWidth="220.0" />
                                     </children>
                                 </HBox>
                             </children>
@@ -135,9 +145,10 @@
                 <TableView fx:id="tblTherapyPrograms" onMouseClicked="#therapyProgramSelectOnAction" prefHeight="290.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colProgramId" prefWidth="100.0" text="Program ID" />
-                        <TableColumn fx:id="colName" prefWidth="250.0" text="Name" />
-                        <TableColumn fx:id="colDuration" prefWidth="200.0" text="Duration" />
+                        <TableColumn fx:id="colName" prefWidth="200.0" text="Name" />
+                        <TableColumn fx:id="colDuration" prefWidth="150.0" text="Duration" />
                         <TableColumn fx:id="colFee" prefWidth="150.0" text="Fee" />
+                        <TableColumn fx:id="colTherapist" prefWidth="150.0" text="Therapist" />
                     </columns>
                     <VBox.margin>
                         <Insets />

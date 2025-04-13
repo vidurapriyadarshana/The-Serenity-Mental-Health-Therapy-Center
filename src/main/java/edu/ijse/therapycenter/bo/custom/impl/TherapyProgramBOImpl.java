@@ -43,7 +43,8 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                     therapyProgram.getProgramId(),
                     therapyProgram.getName(),
                     therapyProgram.getDuration(),
-                    therapyProgram.getFee()
+                    therapyProgram.getFee(),
+                    therapyProgram.getTherapistName()
             ));
         }
         return users;
@@ -72,7 +73,8 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 entity.getProgramId(),
                 entity.getName(),
                 entity.getDuration(),
-                entity.getFee()
+                entity.getFee(),
+                entity.getTherapistName()
         );
     }
 
@@ -85,6 +87,7 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 dto.getName(),
                 dto.getDuration(),
                 dto.getFee(),
+                dto.getTherapistName(),
                 null
         );
     }
@@ -98,6 +101,7 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 dto.getName(),
                 dto.getDuration(),
                 dto.getFee(),
+                dto.getTherapistName(),
                 null
         );
     }
@@ -110,7 +114,8 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 entity.getProgramId(),
                 entity.getName(),
                 entity.getDuration(),
-                entity.getFee()
+                entity.getFee(),
+                entity.getTherapistName()
         );
     }
 
