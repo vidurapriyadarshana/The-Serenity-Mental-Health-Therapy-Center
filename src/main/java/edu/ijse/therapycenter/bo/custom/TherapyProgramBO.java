@@ -18,4 +18,5 @@ public interface TherapyProgramBO extends SuperBO {
     Optional<TherapyProgramDTO> findByPK(String pk);
     Optional<String> getLastPK();
     boolean exist(String id) throws SQLException, ClassNotFoundException;
+    ArrayList<String> getProgramList();
 }

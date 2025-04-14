@@ -132,4 +132,18 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         return false;
     }
 
+    @Override
+    public ArrayList<String> getProgramList() {
+        ArrayList<String> programNames = new ArrayList<>();
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            List<String> names = session.createQuery("SELECT tp.name FROM TherapyProgram tp", String.class).list();
+            programNames.addAll(names);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return programNames;
+    }
+
 }

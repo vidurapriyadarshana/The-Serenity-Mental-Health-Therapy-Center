@@ -6,4 +6,5 @@ import edu.ijse.therapycenter.entity.TherapyProgram;
 import java.util.ArrayList;
 
 public interface TherapyProgramDAO extends CrudDAO<TherapyProgram,String> {
+    ArrayList<String> getProgramList();
 }

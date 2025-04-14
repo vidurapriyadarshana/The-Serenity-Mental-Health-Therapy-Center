@@ -64,6 +64,11 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
         return false;
     }
 
+    @Override
+    public ArrayList<String> getProgramList() {
+        return therapyProgramDAO.getProgramList();
+    }
+
 
     public static TherapyProgramDTO convertToDTO(TherapyProgram entity) {
         if (entity == null) {
