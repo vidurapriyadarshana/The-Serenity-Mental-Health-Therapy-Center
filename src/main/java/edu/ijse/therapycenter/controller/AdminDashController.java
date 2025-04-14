@@ -26,13 +26,15 @@ public class AdminDashController {
     private Label therapistsCount;
 
     @FXML
-    void navAppoinments(ActionEvent event) {
-
+    void navAppoinments(ActionEvent event) throws IOException {
+        loadPageAnchor.getChildren().clear();
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/TherapyScheduling.fxml")));
     }
 
     @FXML
-    void navBilling(ActionEvent event) {
-
+    void navBilling(ActionEvent event) throws IOException {
+        loadPageAnchor.getChildren().clear();
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Payment.fxml")));
     }
 
     @FXML

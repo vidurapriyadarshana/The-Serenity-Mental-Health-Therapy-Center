@@ -22,7 +22,6 @@ public class TherapyProgram implements SuperEntity{
     private String name;
     private String duration;
     private double fee;
-    private String therapistName;
 
     @OneToMany(mappedBy = "therapyProgram")
     private List<TherapySession> therapySessions;

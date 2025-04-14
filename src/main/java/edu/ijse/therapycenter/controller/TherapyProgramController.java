@@ -35,9 +35,6 @@ public class TherapyProgramController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private ChoiceBox<String> selectTherapist;
-
-    @FXML
     private TableColumn<TherapyProgramDTO, String> colDuration;
 
     @FXML
@@ -48,9 +45,6 @@ public class TherapyProgramController implements Initializable {
 
     @FXML
     private TableColumn<TherapyProgramDTO, String> colProgramId;
-
-    @FXML
-    private TableColumn<TherapyProgramDTO, String> colTherapist;
 
     @FXML
     private Label errorMessage;
@@ -84,7 +78,6 @@ public class TherapyProgramController implements Initializable {
         String name = txtName.getText();
         String duration = txtDuration.getText() + " " + selectTime.getValue();
         String fee = txtFee.getText();
-        String therapist = selectTherapist.getValue();
 
         if(name.isEmpty() || duration.isEmpty() || fee.isEmpty()){
             errorMessage.setText("Please fill all fields");
@@ -96,7 +89,6 @@ public class TherapyProgramController implements Initializable {
         therapyProgramDTO.setName(name);
         therapyProgramDTO.setDuration(duration);
         therapyProgramDTO.setFee(Double.parseDouble(fee));
-        therapyProgramDTO.setTherapistName(therapist);
 
 
         boolean isAdded = therapyProgramBO.save(therapyProgramDTO);
@@ -109,7 +101,6 @@ public class TherapyProgramController implements Initializable {
             txtDuration.clear();
             txtFee.clear();
             selectTime.setValue(null);
-            selectTherapist.getSelectionModel().clearSelection();
             loadTherapyProgramTable();
         }else{
             errorMessage.setText("Failed to add Therapy Program");
@@ -128,7 +119,6 @@ public class TherapyProgramController implements Initializable {
             errorMessage.setText("");
             selectTime.setValue(null);
             lblProgramId.setText(this.id);
-            selectTherapist.getSelectionModel().clearSelection();
             loadTherapyProgramTable();
         } else {
             System.out.println("Failed to delete patient");
@@ -143,7 +133,6 @@ public class TherapyProgramController implements Initializable {
         errorMessage.setText("");
         selectTime.setValue(null);
         lblProgramId.setText(this.id);
-        selectTherapist.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -157,7 +146,6 @@ public class TherapyProgramController implements Initializable {
             txtDuration.setText(parts[0]);
             selectTime.setValue(parts[1]);
             txtFee.setText(String.valueOf(selectedPatient.getFee()));
-            selectTherapist.setValue(selectedPatient.getTherapistName());
         }
     }
 
@@ -167,7 +155,6 @@ public class TherapyProgramController implements Initializable {
         String name = txtName.getText();
         String duration = txtDuration.getText() + " " + selectTime.getValue();
         String fee = txtFee.getText();
-        String therapist = selectTherapist.getValue();
 
         if(name.isEmpty() || duration.isEmpty() || fee.isEmpty()){
             errorMessage.setText("Please fill all fields");
@@ -179,7 +166,6 @@ public class TherapyProgramController implements Initializable {
         therapyProgramDTO.setName(name);
         therapyProgramDTO.setDuration(duration);
         therapyProgramDTO.setFee(Double.parseDouble(fee));
-        therapyProgramDTO.setTherapistName(therapist);
 
         boolean isUpdated = therapyProgramBO.update(therapyProgramDTO);
 
@@ -191,7 +177,6 @@ public class TherapyProgramController implements Initializable {
             txtDuration.clear();
             txtFee.clear();
             selectTime.setValue(null);
-            selectTherapist.getSelectionModel().clearSelection();
             loadTherapyProgramTable();
         }else{
             errorMessage.setText("Failed to update Therapy Program");
@@ -205,14 +190,10 @@ public class TherapyProgramController implements Initializable {
         this.id = therapyProgramBO.getLastPK().orElse("0");
         lblProgramId.setText(this.id);
 
-        ArrayList<String> therapistList = therapistBO.getTherapistList();
-        selectTherapist.getItems().addAll(therapistList);
-
         colProgramId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProgramId()));
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         colDuration.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDuration()));
         colFee.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFee()));
-        colTherapist.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapistName()));
         loadTherapyProgramTable();
     }
 

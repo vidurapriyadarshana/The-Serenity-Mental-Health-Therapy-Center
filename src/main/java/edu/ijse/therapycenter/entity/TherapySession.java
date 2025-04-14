@@ -18,6 +18,7 @@ public class TherapySession implements SuperEntity{
     private String date;
     private String time;
     private String status;
+
     @ManyToOne
     @JoinColumn(name = "therapist_id")
     private Therapist therapist;

@@ -128,15 +128,4 @@ public class TherapistDAOImpl implements TherapistDAO {
         return false;
     }
 
-    @Override
-    public ArrayList<String> getTherapistList() {
-        ArrayList<String> nameList = new ArrayList<>();
-        try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            List<String> result = session.createQuery("SELECT t.name FROM Therapist t", String.class).list();
-            nameList.addAll(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return nameList;
-    }
 }

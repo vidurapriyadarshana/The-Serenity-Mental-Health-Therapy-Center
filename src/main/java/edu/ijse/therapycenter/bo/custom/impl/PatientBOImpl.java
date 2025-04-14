@@ -47,9 +47,7 @@ public class PatientBOImpl implements PatientBO {
         }
         return users;
     }
-
-
-
+    
     @Override
     public Optional<PatientDTO> findByPK(String pk) {
         return Optional.empty();

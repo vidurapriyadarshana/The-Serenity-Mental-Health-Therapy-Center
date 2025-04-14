@@ -52,6 +52,9 @@ public class TherapistController implements Initializable {
     private TableView<TherapistDTO> tblTherapists;
 
     @FXML
+    private ChoiceBox<?> specializationChoice;
+
+    @FXML
     private TextField txtName;
 
     @FXML

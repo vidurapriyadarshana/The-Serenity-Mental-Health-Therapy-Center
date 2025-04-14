@@ -2,17 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.therapycenter.controller.PatientController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.therapycenter.controller.TherapySchedulingController">
     <children>
         <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0">
             <padding>
@@ -20,7 +20,7 @@
             </padding>
             <children>
                 <!-- Header -->
-                <Label text="Patient" textFill="#2c3e50">
+                <Label text="Therapy Session Scheduling" textFill="#2c3e50">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -32,19 +32,19 @@
                     </graphic>
                 </Label>
 
-                <!-- Patient Form -->
+                <!-- Session Scheduling Form -->
                 <HBox spacing="15.0">
                     <children>
                         <VBox spacing="15.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="ID" textFill="#2c3e50">
+                                        <Label prefWidth="90.0" text="Session ID:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblPatientId" text="ID" textFill="#2c3e50">
+                                        <Label fx:id="lblSessionId" text="Automatic" textFill="#2c3e50">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
@@ -53,22 +53,22 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Contact:" textFill="#2c3e50">
+                                        <Label prefWidth="90.0" text="Date:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="txtContact" prefHeight="30.0" prefWidth="220.0" promptText="Enter contact number" />
+                                        <DatePicker fx:id="datePickerSession" prefHeight="30.0" prefWidth="220.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Gender:" textFill="#2c3e50">
+                                        <Label prefWidth="90.0" text="Time:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox fx:id="cmbGender" prefHeight="30.0" prefWidth="220.0" promptText="Select gender" />
+                                        <ChoiceBox fx:id="selectTime" prefHeight="30.0" prefWidth="220.0" />
                                     </children>
                                 </HBox>
                             </children>
@@ -77,22 +77,32 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Name:" textFill="#2c3e50">
+                                        <Label prefWidth="90.0" text="Patient:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="txtName" prefHeight="30.0" prefWidth="220.0" promptText="Enter patient name" />
+                                        <ChoiceBox fx:id="selectPatient" prefHeight="30.0" prefWidth="220.0" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Reg. Date" textFill="#2c3e50">
+                                        <Label prefWidth="90.0" text="Therapist:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                              <Label fx:id="dpRegDate" />
+                                        <ChoiceBox fx:id="selectTherapist" prefHeight="30.0" prefWidth="220.0" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Program:" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="selectProgram" prefHeight="30.0" prefWidth="220.0" />
                                     </children>
                                 </HBox>
                             </children>
@@ -100,21 +110,32 @@
                     </children>
                 </HBox>
 
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label prefWidth="90.0" text="Status:" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <ChoiceBox fx:id="selectStatus" prefHeight="30.0" prefWidth="220.0" />
+                    </children>
+                </HBox>
+
                 <!-- Buttons -->
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
-                  <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addPatient" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Add">
+                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
+                        <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleSession" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Schedule">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updatePatient" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Update">
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateSession" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Update">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deletePatient" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Delete">
+                        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancelSession" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Cancel">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -130,8 +151,8 @@
                     </padding>
                 </HBox>
 
-                <!-- Patient Records Header -->
-                <Label text="Patient Records:" textFill="#2c3e50">
+                <!-- Session Records Header -->
+                <Label text="Therapy Session Records:" textFill="#2c3e50">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -140,14 +161,16 @@
                     </VBox.margin>
                 </Label>
 
-                <!-- Patient Records Table -->
-                <TableView fx:id="tblPatients" onMouseClicked="#petientSelectOnAction" prefHeight="290.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
+                <!-- Session Records Table -->
+                <TableView fx:id="tblTherapySessions" onMouseClicked="#sessionSelectOnAction" prefHeight="290.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
-                        <TableColumn fx:id="colName" prefWidth="200.0" text="Name" />
-                        <TableColumn fx:id="colContact" prefWidth="150.0" text="Contact" />
-                        <TableColumn fx:id="colGender" prefWidth="100.0" text="Gender" />
-                        <TableColumn fx:id="colRegDate" prefWidth="150.0" text="Reg. Date" />
+                        <TableColumn fx:id="colSessionId" prefWidth="80.0" text="Session ID" />
+                        <TableColumn fx:id="colDate" prefWidth="90.0" text="Date" />
+                        <TableColumn fx:id="colTime" prefWidth="90.0" text="Time" />
+                        <TableColumn fx:id="colPatient" prefWidth="120.0" text="Patient" />
+                        <TableColumn fx:id="colTherapist" prefWidth="120.0" text="Therapist" />
+                        <TableColumn fx:id="colProgram" prefWidth="160.0" text="Program" />
+                        <TableColumn fx:id="colStatus" prefWidth="80.0" text="Status" />
                     </columns>
                     <VBox.margin>
                         <Insets />
