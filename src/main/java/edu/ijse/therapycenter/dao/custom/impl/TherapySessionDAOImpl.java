@@ -60,9 +60,27 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
     }
 
     @Override
-    public boolean deleteByPK(String pk) throws Exception {
-        return false;
+    public boolean deleteByPK(String sessionId) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            TherapySession therapySession = session.get(TherapySession.class, sessionId);
+
+            if (therapySession != null) {
+                session.delete(therapySession);
+                transaction.commit();
+                return true;
+            } else {
+                System.out.println("TherapySession with ID " + sessionId + " not found.");
+                transaction.rollback();
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public List<TherapySession> getAll() {

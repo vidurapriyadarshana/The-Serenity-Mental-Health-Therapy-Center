@@ -92,8 +92,14 @@ public class TherapySessionController implements Initializable {
     private TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
 
     @FXML
-    void cancelSession(ActionEvent event) {
-
+    void cancelSession(ActionEvent event) throws Exception {
+        TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
+        if (selectedSession != null) {
+            therapySessionBO.deleteByPK(selectedSession.getId());
+            loadTherapyProgramTable();
+        } else {
+            errorMessage.setText("Please select a session to cancel.");
+        }
     }
 
     @FXML
@@ -135,12 +141,37 @@ public class TherapySessionController implements Initializable {
 
     @FXML
     void sessionSelectOnAction(MouseEvent event) {
-
+        TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
+        if (selectedSession != null) {
+            lblSessionId.setText(selectedSession.getId());
+            datePickerSession.setValue(java.time.LocalDate.parse(selectedSession.getDate()));
+            selectTime.setValue(selectedSession.getTime());
+            selectPatient.setValue(selectedSession.getPatient().getName());
+            selectPatient.setDisable(true);
+            selectTherapist.setValue(selectedSession.getTherapist().getName());
+            selectTherapist.setDisable(true);
+            selectProgram.setValue(selectedSession.getTherapyProgram().getName());
+            selectProgram.setDisable(true);
+        }
     }
 
     @FXML
     void updateSession(ActionEvent event) {
+        String sessionId = lblSessionId.getText();
+        String date = datePickerSession.getValue().toString();
+        String time = selectTime.getValue();
+        String status = "Pending";
 
+        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+        therapySessionDTO.setId(sessionId);
+        therapySessionDTO.setDate(date);
+        therapySessionDTO.setTime(time);
+        therapySessionDTO.setStatus(status);
+        therapySessionDTO.setPatient(patientDTO);
+        therapySessionDTO.setTherapist(therapistDTO);
+        therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+
+        therapySessionBO.update(therapySessionDTO);
     }
 
     @Override

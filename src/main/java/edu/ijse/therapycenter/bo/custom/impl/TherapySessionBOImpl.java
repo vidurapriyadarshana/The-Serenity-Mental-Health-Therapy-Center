@@ -34,7 +34,7 @@ public class TherapySessionBOImpl implements TherapySessionBO {
 
     @Override
     public boolean deleteByPK(String pk) throws Exception {
-        return false;
+        return therapySessionDAO.deleteByPK(pk);
     }
 
     @Override
