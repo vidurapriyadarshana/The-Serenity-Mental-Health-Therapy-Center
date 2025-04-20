@@ -13,6 +13,7 @@ import edu.ijse.therapycenter.entity.TherapyProgram;
 import edu.ijse.therapycenter.entity.TherapySession;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,35 @@ public class TherapySessionBOImpl implements TherapySessionBO {
 
     @Override
     public List<TherapySessionDTO> getAll() {
-        return List.of();
+        List<TherapySessionDTO> users = new ArrayList<>();
+        List<TherapySession> all = therapySessionDAO.getAll();
+        for (TherapySession patient : all) {
+            users.add(new TherapySessionDTO(
+                    patient.getId(),
+                    patient.getDate(),
+                    patient.getTime(),
+                    patient.getStatus(),
+                    new TherapistDTO(
+                            patient.getTherapist().getId(),
+                            patient.getTherapist().getName(),
+                            patient.getTherapist().getSpecialization()
+                    ),
+                    new PatientDTO(
+                            patient.getPatient().getId(),
+                            patient.getPatient().getName(),
+                            patient.getPatient().getContactInfo(),
+                            patient.getPatient().getGender(),
+                            patient.getPatient().getBirthDate()
+                    ),
+                    new TherapyProgramDTO(
+                            patient.getTherapyProgram().getProgramId(),
+                            patient.getTherapyProgram().getName(),
+                            patient.getTherapyProgram().getDuration(),
+                            patient.getTherapyProgram().getFee()
+                    )
+            ));
+        }
+        return users;
     }
 
     @Override

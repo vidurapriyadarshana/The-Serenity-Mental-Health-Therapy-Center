@@ -8,6 +8,7 @@ import edu.ijse.therapycenter.entity.TherapySession;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,12 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
 
     @Override
     public List<TherapySession> getAll() {
-        return List.of();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("FROM TherapySession", TherapySession.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     @Override

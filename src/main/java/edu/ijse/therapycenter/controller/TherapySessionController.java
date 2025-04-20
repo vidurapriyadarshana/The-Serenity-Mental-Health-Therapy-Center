@@ -9,6 +9,10 @@ import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapistDTO;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;
 import edu.ijse.therapycenter.dto.TherapySessionDTO;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -152,5 +156,21 @@ public class TherapySessionController implements Initializable {
         selectProgram.getItems().addAll(programList);
 
         selectTime.getItems().addAll("08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM");
+
+        colSessionId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDate()));
+        colTime.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTime()));
+        colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
+        colPatient.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatient().getName()));
+        colTherapist.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapist().getName()));
+        colProgram.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapyProgram().getName()));
+
+        loadTherapyProgramTable();
+    }
+
+    private void loadTherapyProgramTable() {
+        List<TherapySessionDTO> therapySessionList = therapySessionBO.getAll();
+        ObservableList<TherapySessionDTO> therapySessionTMS = FXCollections.observableArrayList(therapySessionList);
+        tblTherapySessions.setItems(therapySessionTMS);
     }
 }
