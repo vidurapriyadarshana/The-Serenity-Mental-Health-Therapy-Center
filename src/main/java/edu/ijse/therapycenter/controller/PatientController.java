@@ -223,7 +223,6 @@ public class PatientController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Invalid contact number");
             alert.show();
-            return;
         }
     }
 
@@ -246,20 +245,8 @@ public class PatientController implements Initializable {
     }
 
     private void loadPatientTable() {
-
         List<PatientDTO> patientList = patientBO.getAll();
-
-        for (PatientDTO patient : patientList) {
-            System.out.println("ID: " + patient.getId());
-            System.out.println("Name: " + patient.getName());
-            System.out.println("Contact Info: " + patient.getContactInfo());
-            System.out.println("Gender: " + patient.getGender());
-            System.out.println("Birth Date: " + patient.getBirthDate());
-            System.out.println("-------------------------------");
-        }
-
         ObservableList<PatientDTO> patientTMS = FXCollections.observableArrayList(patientList);
-
         tblPatients.setItems(patientTMS);
     }
 

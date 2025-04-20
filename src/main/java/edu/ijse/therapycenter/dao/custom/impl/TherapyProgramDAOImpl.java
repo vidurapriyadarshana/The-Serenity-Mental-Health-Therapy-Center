@@ -3,6 +3,7 @@ package edu.ijse.therapycenter.dao.custom.impl;
 import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.TherapyProgramDAO;
 import edu.ijse.therapycenter.entity.Patient;
+import edu.ijse.therapycenter.entity.Therapist;
 import edu.ijse.therapycenter.entity.TherapyProgram;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -144,6 +145,19 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         }
 
         return programNames;
+    }
+
+    @Override
+    public TherapyProgram getAllTherapyProgram(String programName) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery(
+                            "FROM TherapyProgram WHERE name = :name", TherapyProgram.class)
+                    .setParameter("name", programName)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

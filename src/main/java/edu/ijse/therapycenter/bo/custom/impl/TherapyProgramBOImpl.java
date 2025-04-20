@@ -69,6 +69,11 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
         return therapyProgramDAO.getProgramList();
     }
 
+    @Override
+    public TherapyProgramDTO getAllTherapyProgram(String programName) {
+        TherapyProgram therapyProgram = therapyProgramDAO.getAllTherapyProgram(programName);
+        return convertToDTO(therapyProgram);
+    }
 
     public static TherapyProgramDTO convertToDTO(TherapyProgram entity) {
         if (entity == null) {

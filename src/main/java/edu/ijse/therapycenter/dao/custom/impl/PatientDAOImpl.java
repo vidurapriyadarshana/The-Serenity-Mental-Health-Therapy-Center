@@ -2,12 +2,15 @@ package edu.ijse.therapycenter.dao.custom.impl;
 
 import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.PatientDAO;
+import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.entity.Patient;
+import edu.ijse.therapycenter.entity.Therapist;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -128,6 +131,33 @@ public class PatientDAOImpl implements PatientDAO {
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
+    }
+
+    @Override
+    public ArrayList<String> patientList() {
+        ArrayList<String> patientsNames = new ArrayList<>();
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            List<String> names = session.createQuery("SELECT tp.name FROM Patient tp", String.class).list();
+            patientsNames.addAll(names);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return patientsNames;
+    }
+
+    @Override
+    public Patient getAllPatient(String patientName) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery(
+                            "FROM Patient WHERE name = :name", Patient.class)
+                    .setParameter("name", patientName)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

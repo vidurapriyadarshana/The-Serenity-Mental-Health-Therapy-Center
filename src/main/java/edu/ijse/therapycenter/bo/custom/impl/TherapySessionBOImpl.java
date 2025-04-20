@@ -1,7 +1,15 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.TherapySessionBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.TherapySessionDAOImpl;
+import edu.ijse.therapycenter.dto.PatientDTO;
+import edu.ijse.therapycenter.dto.TherapistDTO;
+import edu.ijse.therapycenter.dto.TherapyProgramDTO;
 import edu.ijse.therapycenter.dto.TherapySessionDTO;
+import edu.ijse.therapycenter.entity.Patient;
+import edu.ijse.therapycenter.entity.Therapist;
+import edu.ijse.therapycenter.entity.TherapyProgram;
 import edu.ijse.therapycenter.entity.TherapySession;
 
 import java.sql.SQLException;
@@ -10,10 +18,12 @@ import java.util.Optional;
 
 public class TherapySessionBOImpl implements TherapySessionBO {
 
+    private final TherapySessionDAOImpl therapySessionDAO = (TherapySessionDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.THERAPY_SESSION);
 
     @Override
     public boolean save(TherapySessionDTO therapySession) {
-        return false;
+        TherapySession therapySession1 = toEntity(therapySession);
+        return therapySessionDAO.save(therapySession1);
     }
 
     @Override
@@ -38,11 +48,83 @@ public class TherapySessionBOImpl implements TherapySessionBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return therapySessionDAO.getLastPK();
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    public static TherapySession toEntity(TherapySessionDTO dto) {
+        if (dto == null) return null;
+
+        TherapySession entity = new TherapySession();
+        entity.setId(dto.getId());
+        entity.setDate(dto.getDate());
+        entity.setTime(dto.getTime());
+        entity.setStatus(dto.getStatus());
+
+        entity.setTherapist(dto.getTherapist() != null ? new Therapist(
+                dto.getTherapist().getId(),
+                dto.getTherapist().getName(),
+                dto.getTherapist().getSpecialization(),
+                null
+        ) : null);
+
+        entity.setPatient(dto.getPatient() != null ? new Patient(
+                dto.getPatient().getId(),
+                dto.getPatient().getName(),
+                dto.getPatient().getContactInfo(),
+                dto.getPatient().getGender(),
+                dto.getPatient().getBirthDate(),
+                null
+        ) : null);
+
+        entity.setTherapyProgram(dto.getTherapyProgram() != null ? new TherapyProgram(
+                dto.getTherapyProgram().getProgramId(),
+                dto.getTherapyProgram().getName(),
+                dto.getTherapyProgram().getDuration(),
+                dto.getTherapyProgram().getFee(),
+                null
+        ) : null);
+
+        return entity;
+    }
+
+    public static TherapySessionDTO toDTO(TherapySession entity) {
+        if (entity == null) return null;
+
+        TherapistDTO therapistDTO = entity.getTherapist() != null ? new TherapistDTO(
+                entity.getTherapist().getId(),
+                entity.getTherapist().getName(),
+                entity.getTherapist().getSpecialization()
+        ) : null;
+
+        PatientDTO patientDTO = entity.getPatient() != null ? new PatientDTO(
+                entity.getPatient().getId(),
+                entity.getPatient().getName(),
+                entity.getPatient().getContactInfo(),
+                entity.getPatient().getGender(),
+                entity.getPatient().getBirthDate()
+        ) : null;
+
+        TherapyProgramDTO programDTO = entity.getTherapyProgram() != null ? new TherapyProgramDTO(
+                entity.getTherapyProgram().getProgramId(),
+                entity.getTherapyProgram().getName(),
+                entity.getTherapyProgram().getDuration(),
+                entity.getTherapyProgram().getFee()
+        ) : null;
+
+        return new TherapySessionDTO(
+                entity.getId(),
+                entity.getDate(),
+                entity.getTime(),
+                entity.getStatus(),
+                therapistDTO,
+                patientDTO,
+                programDTO
+        );
+    }
+
 }

@@ -28,7 +28,7 @@ public class AdminDashController {
     @FXML
     void navAppoinments(ActionEvent event) throws IOException {
         loadPageAnchor.getChildren().clear();
-        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/TherapyScheduling.fxml")));
+        loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/TherapySession.fxml")));
     }
 
     @FXML
