@@ -108,16 +108,25 @@ public class TherapySessionController implements Initializable {
         String therapistName = selectTherapist.getValue();
         String programName = selectProgram.getValue();
 
-        System.out.println(patientName + therapistName + programName);
-
         patientDTO = patientBO.getAllPatient(patientName);
-        System.out.println(patientDTO);
-
         therapistDTO = therapistBO.getAllTherapist(therapistName);
-        System.out.println(therapistDTO);
-
         therapyProgramDTO = therapyProgramBO.getAllTherapyProgram(programName);
-        System.out.println(therapyProgramDTO);
+
+        String sessionId = lblSessionId.getText();
+        String date = datePickerSession.getValue().toString();
+        String time = selectTime.getValue();
+        String status = "Pending";
+
+        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+        therapySessionDTO.setId(sessionId);
+        therapySessionDTO.setDate(date);
+        therapySessionDTO.setTime(time);
+        therapySessionDTO.setStatus(status);
+        therapySessionDTO.setPatient(patientDTO);
+        therapySessionDTO.setTherapist(therapistDTO);
+        therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+
+        therapySessionBO.save(therapySessionDTO);
     }
 
     @FXML

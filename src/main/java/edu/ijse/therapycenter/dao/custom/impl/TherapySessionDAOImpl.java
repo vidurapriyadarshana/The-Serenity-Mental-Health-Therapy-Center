@@ -28,20 +28,21 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
             TherapyProgram program = session.get(TherapyProgram.class, therapySession.getTherapyProgram().getProgramId());
 
             if (therapist == null || patient == null || program == null) {
-                throw new RuntimeException("Referenced entities do not exist in DB!");
+                System.out.println("Referenced entities do not exist.");
+                transaction.rollback();
+                return false;
             }
 
-            String sql = "INSERT INTO therapy_sessions (id, date, time, status, therapist_id, patient_id, program_id) " +
-                    "VALUES (:id, :date, :time, :status, :therapistId, :patientId, :programId)";
-
-            session.createNativeQuery(sql)
+            session.createNativeQuery(
+                            "INSERT INTO therapy_sessions (id, date, time, status, therapist_id, patient_id, program_id) " +
+                                    "VALUES (:id, :date, :time, :status, :therapistId, :patientId, :programId)")
                     .setParameter("id", therapySession.getId())
                     .setParameter("date", therapySession.getDate())
                     .setParameter("time", therapySession.getTime())
                     .setParameter("status", therapySession.getStatus())
-                    .setParameter("therapistId", therapySession.getTherapist().getId())
-                    .setParameter("patientId", therapySession.getPatient().getId())
-                    .setParameter("programId", therapySession.getTherapyProgram().getProgramId())
+                    .setParameter("therapistId", therapist.getId())
+                    .setParameter("patientId", patient.getId())
+                    .setParameter("programId", program.getProgramId())
                     .executeUpdate();
 
             transaction.commit();
@@ -51,7 +52,6 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
             return false;
         }
     }
-
 
     @Override
     public boolean update(TherapySession therapySession) {
