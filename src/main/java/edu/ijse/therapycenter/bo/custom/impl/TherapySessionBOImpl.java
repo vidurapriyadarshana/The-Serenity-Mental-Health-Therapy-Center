@@ -29,7 +29,8 @@ public class TherapySessionBOImpl implements TherapySessionBO {
 
     @Override
     public boolean update(TherapySessionDTO therapySession) {
-        return false;
+        TherapySession therapySession1 = toEntity(therapySession);
+        return therapySessionDAO.update(therapySession1);
     }
 
     @Override

@@ -56,7 +56,24 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
 
     @Override
     public boolean update(TherapySession therapySession) {
-        return false;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            session.createNativeQuery(
+                            "UPDATE therapy_sessions SET date = :date, time = :time, status = :status " +
+                                    "WHERE id = :id")
+                    .setParameter("date", therapySession.getDate())
+                    .setParameter("time", therapySession.getTime())
+                    .setParameter("status", therapySession.getStatus())
+                    .setParameter("id", therapySession.getId())
+                    .executeUpdate();
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
