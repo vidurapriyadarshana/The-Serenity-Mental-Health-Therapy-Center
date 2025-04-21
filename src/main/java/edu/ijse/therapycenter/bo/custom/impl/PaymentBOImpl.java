@@ -1,6 +1,8 @@
 package edu.ijse.therapycenter.bo.custom.impl;
 
 import edu.ijse.therapycenter.bo.custom.PaymentBO;
+import edu.ijse.therapycenter.dao.DAOFactory;
+import edu.ijse.therapycenter.dao.custom.impl.PaymentDAOImpl;
 import edu.ijse.therapycenter.dto.PaymentDTO;
 
 import java.sql.SQLException;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class PaymentBOImpl implements PaymentBO {
+
+    private final PaymentDAOImpl paymentDAO = (PaymentDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PAYMENT);
 
     @Override
     public boolean save(PaymentDTO payment) {
@@ -36,7 +40,7 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public Optional<String> getLastPK() {
-        return Optional.empty();
+        return paymentDAO.getLastPK();
     }
 
     @Override

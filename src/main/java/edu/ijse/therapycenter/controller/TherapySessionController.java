@@ -9,7 +9,6 @@ import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapistDTO;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;
 import edu.ijse.therapycenter.dto.TherapySessionDTO;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -137,6 +136,7 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
         therapySessionBO.save(therapySessionDTO);
+        loadTherapyProgramTable();
     }
 
     @FXML
@@ -172,6 +172,7 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
         therapySessionBO.update(therapySessionDTO);
+        loadTherapyProgramTable();
     }
 
     @Override

@@ -65,6 +65,5 @@ public class AdminDashController {
         loadPageAnchor.getChildren().clear();
         loadPageAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Therapist.fxml")));
     }
-
 }
 

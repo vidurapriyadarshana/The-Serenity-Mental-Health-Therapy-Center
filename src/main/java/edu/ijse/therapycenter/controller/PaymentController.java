@@ -1,7 +1,11 @@
 package edu.ijse.therapycenter.controller;
 
+import edu.ijse.therapycenter.bo.BOFactory;
+import edu.ijse.therapycenter.bo.custom.impl.PaymentBOImpl;
+import edu.ijse.therapycenter.dto.PaymentDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -11,13 +15,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class PaymentController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Button btnGenerateInvoice;
-
-    @FXML
-    private Button btnPrintInvoice;
+public class PaymentController implements Initializable {
 
     @FXML
     private Button btnProcess;
@@ -29,22 +30,19 @@ public class PaymentController {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<?, ?> colAmount;
+    private TableColumn<PaymentDTO, String> colAmount;
 
     @FXML
-    private TableColumn<?, ?> colDate;
+    private TableColumn<PaymentDTO, String> colDate;
 
     @FXML
-    private TableColumn<?, ?> colPatient;
+    private TableColumn<PaymentDTO, String> colPatient;
 
     @FXML
-    private TableColumn<?, ?> colPaymentId;
+    private TableColumn<PaymentDTO, String> colPaymentId;
 
     @FXML
-    private TableColumn<?, ?> colProgram;
-
-    @FXML
-    private TableColumn<?, ?> colSession;
+    private TableColumn<PaymentDTO, String> colSession;
 
     @FXML
     private DatePicker datePickerPayment;
@@ -56,19 +54,19 @@ public class PaymentController {
     private Label lblPaymentId;
 
     @FXML
-    private Label lblProgram;
+    private ChoiceBox<String> selectPatient;
 
     @FXML
-    private ChoiceBox<?> selectPatient;
+    private ChoiceBox<String> selectSession;
 
     @FXML
-    private ChoiceBox<?> selectSession;
-
-    @FXML
-    private TableView<?> tblPayments;
+    private TableView<PaymentDTO> tblPayments;
 
     @FXML
     private TextField txtAmount;
+
+
+    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
     @FXML
     void generateInvoice(ActionEvent event) {
@@ -100,4 +98,8 @@ public class PaymentController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        lblPaymentId.setText(paymentBO.getLastPK().orElse("0"));
+    }
 }
