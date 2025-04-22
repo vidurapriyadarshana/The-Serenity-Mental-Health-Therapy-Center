@@ -89,6 +89,7 @@ public class PatientController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please fill all the fields");
             alert.show();
+
             return;
         }
 
@@ -118,7 +119,8 @@ public class PatientController implements Initializable {
             txtContact.clear();
             cmbGender.setValue(null);
             dpRegDate.setText(null);
-            this.id = String.valueOf(patientBO.getLastPK().orElse("Error"));
+            lblPatientId.setText(patientBO.getLastPK().orElse("Error"));
+
             loadPatientTable();
         } else {
             System.out.println("Failed to save patient");

@@ -17,7 +17,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -83,6 +82,8 @@ public class PaymentController implements Initializable {
     private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
     private final QuoryBOImpl quoryBO = (QuoryBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.QUARY);
 
+    private ArrayList<String> patientDetails;
+
     @FXML
     void paymentSelectOnAction(MouseEvent event) {
 
@@ -92,12 +93,8 @@ public class PaymentController implements Initializable {
     void petientSelectOnAction(ActionEvent event) {
         String selectedPatient = selectPatient.getValue();
 
-        ArrayList<String> patientDetails = quoryBO.getPatientDetails(selectedPatient);
+        patientDetails = quoryBO.getPatientDetails(selectedPatient);
 
-        System.out.println(patientDetails);
-
-        System.out.println(patientDetails.get(3));
-        System.out.println(patientDetails.get(4));
         System.out.println(patientDetails);
 
         lblAmount.setText(patientDetails.get(3));
@@ -106,6 +103,15 @@ public class PaymentController implements Initializable {
 
     @FXML
     void processPayment(ActionEvent event) {
+        String paymentId = lblPaymentId.getText();
+
+        String patientId = selectPatient.getValue();
+
+        String sessionId = selectSession.getValue();
+
+        String amount = lblAmount.getText();
+        String date = lblDate.getText();
+
 
     }
 

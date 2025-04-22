@@ -85,7 +85,7 @@ public class TherapistController implements Initializable {
         if(isAdded){
             txtName.clear();
             specializationChoice.setValue(null);
-            this.id = String.valueOf(therapistBO.getLastPK().orElse("Error"));
+            lblTherapistId.setText(therapistBO.getLastPK().orElse("Error"));
             loadTherapistTable();
         }else{
             errorMessage.setText("Failed to add therapist");
@@ -113,7 +113,7 @@ public class TherapistController implements Initializable {
         txtName.clear();
         specializationChoice.setValue(null);
         specializationChoice.setDisable(false);
-        lblTherapistId.setText(id);
+        lblTherapistId.setText(therapistBO.getLastPK().orElse("Error"));
     }
 
     @FXML

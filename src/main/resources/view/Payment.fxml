@@ -19,7 +19,7 @@
             </padding>
             <children>
                 <!-- Header -->
-                <Label text="Payment &amp; Invoice Management" textFill="#2c3e50">
+                <Label text="Payment Management" textFill="#2c3e50">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -131,7 +131,7 @@
                 </Label>
 
                 <!-- Payment Records Table -->
-                <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="290.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="210.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colPaymentId" prefWidth="100.0" text="Payment ID" />
                         <TableColumn fx:id="colAmount" prefWidth="144.00001525878906" text="Amount" />

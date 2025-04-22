@@ -16,7 +16,7 @@ public class QueryDAOImpl implements QueryDAO {
         ArrayList<String> patientDetails = new ArrayList<>();
 
         try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            String hql = "SELECT ts.id, ts.date, ts.time, tp.name, tp.fee " +
+            String hql = "SELECT p.id, ts.id, ts.date, ts.time, tp.name, tp.fee " +
                     "FROM TherapySession ts " +
                     "JOIN ts.patient p " +
                     "JOIN ts.therapyProgram tp " +
@@ -37,6 +37,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         return patientDetails;
     }
+
 
 
 

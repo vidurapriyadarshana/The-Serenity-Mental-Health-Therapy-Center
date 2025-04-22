@@ -19,4 +19,5 @@ public interface TherapyProgramBO extends SuperBO {
     boolean exist(String id) throws SQLException, ClassNotFoundException;
     ArrayList<String> getProgramList();
     TherapyProgramDTO getAllTherapyProgram(String programName);
+    double getAmount(String programName);
 }

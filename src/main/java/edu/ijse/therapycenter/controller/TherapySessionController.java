@@ -2,10 +2,7 @@ package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
 import edu.ijse.therapycenter.bo.custom.impl.*;
-import edu.ijse.therapycenter.dto.PatientDTO;
-import edu.ijse.therapycenter.dto.TherapistDTO;
-import edu.ijse.therapycenter.dto.TherapyProgramDTO;
-import edu.ijse.therapycenter.dto.TherapySessionDTO;
+import edu.ijse.therapycenter.dto.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -82,10 +79,12 @@ public class TherapySessionController implements Initializable {
     private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
     private final TherapistBOImpl therapistBO = (TherapistBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     private final TherapyProgramBOImpl therapyProgramBO = (TherapyProgramBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
+    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
     private PatientDTO patientDTO = new PatientDTO();
     private TherapistDTO therapistDTO = new TherapistDTO();
     private TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
+
 
     @FXML
     void cancelSession(ActionEvent event) throws Exception {
@@ -133,6 +132,18 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
         therapySessionBO.save(therapySessionDTO);
+
+
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
+        paymentDTO.setAmount(therapyProgramBO.getAmount(programName));
+        paymentDTO.setDate(date);
+        paymentDTO.setStatus("Pending");
+        paymentDTO.setPatient(patientDTO);
+        paymentDTO.setTherapySession(therapySessionDTO);
+
+        paymentBO.save(paymentDTO);
+
         loadTherapyProgramTable();
     }
 

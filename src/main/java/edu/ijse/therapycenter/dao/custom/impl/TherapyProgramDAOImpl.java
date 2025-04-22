@@ -160,4 +160,26 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         }
     }
 
+    @Override
+    public double getAmount(String programName) {
+        double amount = 0;
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "SELECT tp.fee FROM TherapyProgram tp WHERE tp.name = :programName";
+
+            Double fee = session.createQuery(hql, Double.class)
+                    .setParameter("programName", programName)
+                    .uniqueResult();
+
+            if (fee != null) {
+                amount = fee;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return amount;
+    }
+
+
 }
