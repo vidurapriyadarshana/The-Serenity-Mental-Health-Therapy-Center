@@ -19,6 +19,7 @@ public class BOFactory {
         THERAPIST,
         THERAPY_PROGRAM,
         THERAPY_SESSION,
+        QUARY,
         USER
     }
 
@@ -29,6 +30,7 @@ public class BOFactory {
             case THERAPIST -> new TherapistBOImpl();
             case THERAPY_PROGRAM -> new TherapyProgramBOImpl();
             case THERAPY_SESSION -> new TherapySessionBOImpl();
+            case QUARY -> new QuoryBOImpl();
             case USER -> new UserBOImpl();
         };
     }

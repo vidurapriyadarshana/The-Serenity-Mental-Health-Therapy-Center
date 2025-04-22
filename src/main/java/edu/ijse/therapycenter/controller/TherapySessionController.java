@@ -1,10 +1,7 @@
 package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
-import edu.ijse.therapycenter.bo.custom.impl.PatientBOImpl;
-import edu.ijse.therapycenter.bo.custom.impl.TherapistBOImpl;
-import edu.ijse.therapycenter.bo.custom.impl.TherapyProgramBOImpl;
-import edu.ijse.therapycenter.bo.custom.impl.TherapySessionBOImpl;
+import edu.ijse.therapycenter.bo.custom.impl.*;
 import edu.ijse.therapycenter.dto.PatientDTO;
 import edu.ijse.therapycenter.dto.TherapistDTO;
 import edu.ijse.therapycenter.dto.TherapyProgramDTO;

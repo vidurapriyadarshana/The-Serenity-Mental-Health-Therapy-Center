@@ -1,8 +1,13 @@
 package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
+import edu.ijse.therapycenter.bo.custom.impl.PatientBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.PaymentBOImpl;
+import edu.ijse.therapycenter.bo.custom.impl.QuoryBOImpl;
 import edu.ijse.therapycenter.dto.PaymentDTO;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
@@ -63,15 +71,17 @@ public class PaymentController implements Initializable {
     private TableView<PaymentDTO> tblPayments;
 
     @FXML
-    private TextField txtAmount;
-
-
-    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private Label lblAmount;
 
     @FXML
-    void generateInvoice(ActionEvent event) {
+    private Label lblDate;
 
-    }
+    @FXML
+    private Label lblSession;
+
+    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
+    private final QuoryBOImpl quoryBO = (QuoryBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.QUARY);
 
     @FXML
     void paymentSelectOnAction(MouseEvent event) {
@@ -79,8 +89,19 @@ public class PaymentController implements Initializable {
     }
 
     @FXML
-    void printInvoice(ActionEvent event) {
+    void petientSelectOnAction(ActionEvent event) {
+        String selectedPatient = selectPatient.getValue();
 
+        ArrayList<String> patientDetails = quoryBO.getPatientDetails(selectedPatient);
+
+        System.out.println(patientDetails);
+
+        System.out.println(patientDetails.get(3));
+        System.out.println(patientDetails.get(4));
+        System.out.println(patientDetails);
+
+        lblAmount.setText(patientDetails.get(3));
+        lblSession.setText(patientDetails.get(4));
     }
 
     @FXML
@@ -90,16 +111,30 @@ public class PaymentController implements Initializable {
 
     @FXML
     void resetForm(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updatePayment(ActionEvent event) {
-
+        lblPaymentId.setText(paymentBO.getLastPK().orElse("0"));
+        selectPatient.setValue(null);
+        lblAmount.setText("");
+        lblSession.setText("");
+        lblDate.setText(LocalDate.now().toString());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lblPaymentId.setText(paymentBO.getLastPK().orElse("0"));
+
+        List<String> patientList = patientBO.patientList();
+        selectPatient.getItems().addAll(patientList);
+        lblDate.setText(LocalDate.now().toString());
+
+        colPaymentId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+
+
+        loadPatientTable();
+    }
+
+    private void loadPatientTable() {
+        List<PaymentDTO> paymentList = paymentBO.getAll();
+        ObservableList<PaymentDTO> paymentTMS = FXCollections.observableArrayList(paymentList);
+        tblPayments.setItems(paymentTMS);
     }
 }

@@ -3,11 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -34,7 +32,7 @@
                 </Label>
 
                 <!-- Payment Form -->
-                <HBox spacing="15.0">
+                <HBox spacing="60.0">
                     <children>
                         <VBox spacing="15.0">
                             <children>
@@ -59,7 +57,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <DatePicker fx:id="datePickerPayment" prefHeight="30.0" prefWidth="220.0" />
+                              <Label fx:id="lblDate" text="Date" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
@@ -69,31 +67,32 @@
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="txtAmount" prefHeight="30.0" prefWidth="220.0" promptText="Enter payment amount" />
+                              <Label fx:id="lblAmount" text="Amount" />
                                     </children>
                                 </HBox>
                             </children>
                         </VBox>
-                        <VBox spacing="15.0">
+                        <VBox prefWidth="384.0" spacing="15.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Patient:" textFill="#2c3e50">
+                                        <Label prefHeight="17.0" prefWidth="66.0" text="Patient:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
                                         <ChoiceBox fx:id="selectPatient" prefHeight="30.0" prefWidth="220.0" />
+                              <Button mnemonicParsing="false" onAction="#petientSelectOnAction" prefHeight="25.0" prefWidth="60.0" text="Select" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Session:" textFill="#2c3e50">
+                                        <Label prefHeight="17.0" prefWidth="65.0" text="Session:" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <ChoiceBox fx:id="selectSession" prefHeight="30.0" prefWidth="220.0" />
+                              <Label fx:id="lblSession" text="Session" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0" />
@@ -105,13 +104,7 @@
                 <!-- Buttons -->
                 <HBox alignment="CENTER" prefHeight="35.0" prefWidth="537.0" spacing="10.0">
                     <children>
-                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
                         <Button fx:id="btnProcess" mnemonicParsing="false" onAction="#processPayment" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Process Payment">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updatePayment" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Update">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
