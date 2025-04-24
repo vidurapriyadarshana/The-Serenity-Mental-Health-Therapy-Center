@@ -80,6 +80,7 @@ public class TherapySessionController implements Initializable {
     private final TherapistBOImpl therapistBO = (TherapistBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     private final TherapyProgramBOImpl therapyProgramBO = (TherapyProgramBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
     private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private final PaymentSessionBOImpl paymentSessionBO = (PaymentSessionBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_SESSION);
 
     private PatientDTO patientDTO = new PatientDTO();
     private TherapistDTO therapistDTO = new TherapistDTO();
@@ -131,8 +132,7 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapist(therapistDTO);
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
-        therapySessionBO.save(therapySessionDTO);
-
+        //therapySessionBO.save(therapySessionDTO);
 
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
@@ -142,7 +142,9 @@ public class TherapySessionController implements Initializable {
         paymentDTO.setPatient(patientDTO);
         paymentDTO.setTherapySession(therapySessionDTO);
 
-        paymentBO.save(paymentDTO);
+        paymentSessionBO.saveSession(therapySessionDTO,paymentDTO);
+
+        //paymentBO.save(paymentDTO);
 
         loadTherapyProgramTable();
     }

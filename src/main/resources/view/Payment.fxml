@@ -133,11 +133,12 @@
                 <!-- Payment Records Table -->
                 <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="210.0" prefWidth="740.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colPaymentId" prefWidth="100.0" text="Payment ID" />
-                        <TableColumn fx:id="colAmount" prefWidth="144.00001525878906" text="Amount" />
-                        <TableColumn fx:id="colDate" prefWidth="138.66668701171875" text="Date" />
-                        <TableColumn fx:id="colPatient" prefWidth="173.99993896484375" text="Patient" />
-                        <TableColumn fx:id="colSession" prefWidth="182.0" text="Session ID" />
+                        <TableColumn fx:id="colPaymentId" prefWidth="92.66668319702148" text="Payment ID" />
+                        <TableColumn fx:id="colAmount" prefWidth="143.33332061767578" text="Amount" />
+                        <TableColumn fx:id="colDate" prefWidth="116.66665649414062" text="Date" />
+                        <TableColumn fx:id="colPatient" prefWidth="128.66668701171875" text="Patient" />
+                        <TableColumn fx:id="colSession" prefWidth="104.00006103515625" text="Session ID" />
+                  <TableColumn fx:id="colStatus" maxWidth="429.3333435058594" prefWidth="154.0" text="Status" />
                     </columns>
                     <VBox.margin>
                         <Insets />

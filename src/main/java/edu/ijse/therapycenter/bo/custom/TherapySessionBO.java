@@ -1,6 +1,7 @@
 package edu.ijse.therapycenter.bo.custom;
 
 import edu.ijse.therapycenter.bo.SuperBO;
+import edu.ijse.therapycenter.dto.PaymentDTO;
 import edu.ijse.therapycenter.dto.TherapySessionDTO;
 
 import java.sql.SQLException;
@@ -16,4 +17,5 @@ public interface TherapySessionBO extends SuperBO {
     Optional<TherapySessionDTO> findByPK(String pk);
     Optional<String> getLastPK();
     boolean exist(String id) throws SQLException, ClassNotFoundException;
+
 }
