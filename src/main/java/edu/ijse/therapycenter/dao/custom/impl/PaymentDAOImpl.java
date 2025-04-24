@@ -2,11 +2,13 @@ package edu.ijse.therapycenter.dao.custom.impl;
 
 import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.PaymentDAO;
+import edu.ijse.therapycenter.entity.Patient;
 import edu.ijse.therapycenter.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +50,12 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public List<Payment> getAll() {
-        return List.of();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("FROM Payment ", Payment.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -86,4 +93,5 @@ public class PaymentDAOImpl implements PaymentDAO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
 }

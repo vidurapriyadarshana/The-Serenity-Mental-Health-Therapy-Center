@@ -3,8 +3,10 @@ package edu.ijse.therapycenter.controller;
 import edu.ijse.therapycenter.bo.BOFactory;
 import edu.ijse.therapycenter.bo.custom.impl.PatientBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.PaymentBOImpl;
+import edu.ijse.therapycenter.bo.custom.impl.PaymentSessionBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.QuoryBOImpl;
 import edu.ijse.therapycenter.dto.PaymentDTO;
+import edu.ijse.therapycenter.dto.TherapySessionDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,9 +36,6 @@ public class PaymentController implements Initializable {
     private Button btnReset;
 
     @FXML
-    private Button btnUpdate;
-
-    @FXML
     private TableColumn<PaymentDTO, String> colAmount;
 
     @FXML
@@ -52,6 +51,9 @@ public class PaymentController implements Initializable {
     private TableColumn<PaymentDTO, String> colSession;
 
     @FXML
+    private TableColumn<PaymentDTO, String> colStatus;
+
+    @FXML
     private DatePicker datePickerPayment;
 
     @FXML
@@ -59,12 +61,6 @@ public class PaymentController implements Initializable {
 
     @FXML
     private Label lblPaymentId;
-
-    @FXML
-    private ChoiceBox<String> selectPatient;
-
-    @FXML
-    private ChoiceBox<String> selectSession;
 
     @FXML
     private TableView<PaymentDTO> tblPayments;
@@ -78,63 +74,60 @@ public class PaymentController implements Initializable {
     @FXML
     private Label lblSession;
 
-    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
-    private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
-    private final QuoryBOImpl quoryBO = (QuoryBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.QUARY);
+    @FXML
+    private Label lblPatient;
 
-    private ArrayList<String> patientDetails;
+    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private final PaymentSessionBOImpl paymentSessionBO = (PaymentSessionBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_SESSION);
 
     @FXML
     void paymentSelectOnAction(MouseEvent event) {
-
-    }
-
-    @FXML
-    void petientSelectOnAction(ActionEvent event) {
-        String selectedPatient = selectPatient.getValue();
-
-        patientDetails = quoryBO.getPatientDetails(selectedPatient);
-
-        System.out.println(patientDetails);
-
-        lblAmount.setText(patientDetails.get(3));
-        lblSession.setText(patientDetails.get(4));
+        PaymentDTO selectedPayment = tblPayments.getSelectionModel().getSelectedItem();
+        if (selectedPayment != null) {
+            lblPaymentId.setText(selectedPayment.getId());
+            lblAmount.setText(String.valueOf(selectedPayment.getAmount()));
+            lblDate.setText(String.valueOf(selectedPayment.getDate()));
+            lblSession.setText(selectedPayment.getTherapySession().getId());
+            lblPatient.setText(selectedPayment.getPatient().getId());
+        }
     }
 
     @FXML
     void processPayment(ActionEvent event) {
         String paymentId = lblPaymentId.getText();
+        String sessionId = lblSession.getText();
 
-        String patientId = selectPatient.getValue();
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setId(paymentId);
+        paymentDTO.setStatus("Paid");
 
-        String sessionId = selectSession.getValue();
+        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+        therapySessionDTO.setId(sessionId);
+        therapySessionDTO.setStatus("Completed");
 
-        String amount = lblAmount.getText();
-        String date = lblDate.getText();
-
-
+        paymentSessionBO.updateSession(therapySessionDTO ,paymentDTO);
+        loadPatientTable();
     }
 
     @FXML
     void resetForm(ActionEvent event) {
-        lblPaymentId.setText(paymentBO.getLastPK().orElse("0"));
-        selectPatient.setValue(null);
+        lblPaymentId.setText("");
         lblAmount.setText("");
+        lblDate.setText("");
         lblSession.setText("");
-        lblDate.setText(LocalDate.now().toString());
+        lblPatient.setText("");
+        datePickerPayment.setValue(null);
+        errorMessage.setText("");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lblPaymentId.setText(paymentBO.getLastPK().orElse("0"));
-
-        List<String> patientList = patientBO.patientList();
-        selectPatient.getItems().addAll(patientList);
-        lblDate.setText(LocalDate.now().toString());
-
         colPaymentId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-
-
+        colAmount.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAmount())));
+        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDate())));
+        colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
+        colPatient.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatient().getId()));
+        colSession.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapySession().getId()));
         loadPatientTable();
     }
 

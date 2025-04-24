@@ -11,6 +11,7 @@ import edu.ijse.therapycenter.entity.Payment;
 import edu.ijse.therapycenter.entity.TherapySession;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,13 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public List<PaymentDTO> getAll() {
-        return List.of();
+        List<Payment> all = paymentDAO.getAll();
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+        for (Payment payment : all) {
+            PaymentDTO paymentDTO = toDTO(payment);
+            paymentDTOList.add(paymentDTO);
+        }
+        return paymentDTOList;
     }
 
     @Override

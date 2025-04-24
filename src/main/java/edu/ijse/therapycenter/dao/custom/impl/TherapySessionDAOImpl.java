@@ -144,4 +144,5 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
 }

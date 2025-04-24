@@ -45,6 +45,36 @@ public class PaymentSessionBOImpl implements PaymentSessionBO {
         }
     }
 
+    @Override
+    public void updateSession(TherapySessionDTO therapySessionDTO, PaymentDTO paymentDTO) {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            TherapySession therapySession = therapyToEntity(therapySessionDTO);
+            Payment payment = paymentToEntity(paymentDTO);
+
+            boolean therapySaved = therapySessionDAO.update(therapySession);
+            if (!therapySaved) {
+                transaction.rollback();
+                return;
+            }
+
+            boolean paymentSaved = paymentDAO.update(payment);
+            if (!paymentSaved) {
+                transaction.rollback();
+                return;
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 
 
     public static TherapySession therapyToEntity(TherapySessionDTO dto) {
