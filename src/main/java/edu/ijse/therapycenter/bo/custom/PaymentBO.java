@@ -16,5 +16,4 @@ public interface PaymentBO extends SuperBO {
     Optional<PaymentDTO> findByPK(String pk);
     Optional<String> getLastPK();
     boolean exist(String id) throws SQLException, ClassNotFoundException;
-
 }

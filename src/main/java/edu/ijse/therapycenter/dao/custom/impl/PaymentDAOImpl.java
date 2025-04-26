@@ -51,7 +51,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     @Override
     public List<Payment> getAll() {
         try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            return session.createQuery("FROM Payment ", Payment.class).list();
+            return session.createQuery("FROM Payment WHERE status = 'Pending'", Payment.class).list();
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
@@ -93,5 +93,35 @@ public class PaymentDAOImpl implements PaymentDAO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    @Override
+    public boolean completePayment(String paymentId) {
+        Transaction transaction = null;
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            transaction = session.beginTransaction();
+
+            Payment payment = session.get(Payment.class, paymentId);
+
+            if (payment != null) {
+                payment.setStatus("Complete");
+
+                session.merge(payment);
+
+                transaction.commit();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

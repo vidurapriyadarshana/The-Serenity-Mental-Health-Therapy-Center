@@ -145,4 +145,33 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
         return false;
     }
 
+    @Override
+    public boolean completeTherapy(String sessionId) {
+        Transaction transaction = null;
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            transaction = session.beginTransaction();
+
+            TherapySession therapySession = session.get(TherapySession.class, sessionId);
+
+            if (therapySession != null) {
+                therapySession.setStatus("Complete");
+
+                session.merge(therapySession);
+
+                transaction.commit();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

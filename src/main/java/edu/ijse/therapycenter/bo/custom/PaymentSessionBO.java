@@ -6,5 +6,5 @@ import edu.ijse.therapycenter.dto.TherapySessionDTO;
 
 public interface PaymentSessionBO extends SuperBO {
     void saveSession(TherapySessionDTO therapySessionDTO, PaymentDTO paymentDTO);
-    void updateSession(TherapySessionDTO therapySessionDTO, PaymentDTO paymentDTO);
+    void updateSession(String sessionId, String paymentId);
 }

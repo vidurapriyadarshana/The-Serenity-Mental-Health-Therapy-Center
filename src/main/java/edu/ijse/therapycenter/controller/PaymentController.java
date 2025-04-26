@@ -1,12 +1,9 @@
 package edu.ijse.therapycenter.controller;
 
 import edu.ijse.therapycenter.bo.BOFactory;
-import edu.ijse.therapycenter.bo.custom.impl.PatientBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.PaymentBOImpl;
 import edu.ijse.therapycenter.bo.custom.impl.PaymentSessionBOImpl;
-import edu.ijse.therapycenter.bo.custom.impl.QuoryBOImpl;
 import edu.ijse.therapycenter.dto.PaymentDTO;
-import edu.ijse.therapycenter.dto.TherapySessionDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -22,8 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -97,15 +91,7 @@ public class PaymentController implements Initializable {
         String paymentId = lblPaymentId.getText();
         String sessionId = lblSession.getText();
 
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(paymentId);
-        paymentDTO.setStatus("Paid");
-
-        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
-        therapySessionDTO.setId(sessionId);
-        therapySessionDTO.setStatus("Completed");
-
-        paymentSessionBO.updateSession(therapySessionDTO ,paymentDTO);
+        paymentSessionBO.updateSession(sessionId ,paymentId);
         loadPatientTable();
     }
 
@@ -116,8 +102,6 @@ public class PaymentController implements Initializable {
         lblDate.setText("");
         lblSession.setText("");
         lblPatient.setText("");
-        datePickerPayment.setValue(null);
-        errorMessage.setText("");
     }
 
     @Override
@@ -128,6 +112,7 @@ public class PaymentController implements Initializable {
         colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
         colPatient.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatient().getId()));
         colSession.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapySession().getId()));
+
         loadPatientTable();
     }
 
