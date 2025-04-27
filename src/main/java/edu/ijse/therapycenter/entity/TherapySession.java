@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -31,4 +33,6 @@ public class TherapySession implements SuperEntity{
     @JoinColumn(name = "program_id")
     private TherapyProgram therapyProgram;
 
+    @OneToMany(mappedBy = "therapySession", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> payments;
 }

@@ -1,9 +1,6 @@
 package edu.ijse.therapycenter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +20,6 @@ public class TherapyProgram implements SuperEntity{
     private String duration;
     private double fee;
 
-    @OneToMany(mappedBy = "therapyProgram")
+    @OneToMany(mappedBy = "therapyProgram" , cascade = CascadeType.ALL)
     private List<TherapySession> therapySessions;
 }

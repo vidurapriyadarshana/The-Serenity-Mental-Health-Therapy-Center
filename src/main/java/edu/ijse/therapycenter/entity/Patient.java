@@ -22,6 +22,6 @@ public class Patient implements SuperEntity{
     private String gender;
     private String birthDate;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL)
     private List<TherapySession> therapySessions;
 }

@@ -20,7 +20,7 @@ public class Therapist implements SuperEntity{
     private String name;
     private String specialization;
 
-    @OneToMany(mappedBy = "therapist")
+    @OneToMany(mappedBy = "therapist" , cascade = CascadeType.ALL)
     private List<TherapySession> therapySessions;
 
 }
