@@ -2,7 +2,6 @@ package edu.ijse.therapycenter.dao.custom.impl;
 
 import edu.ijse.therapycenter.config.FactoryConfiguration;
 import edu.ijse.therapycenter.dao.custom.PaymentDAO;
-import edu.ijse.therapycenter.entity.Patient;
 import edu.ijse.therapycenter.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

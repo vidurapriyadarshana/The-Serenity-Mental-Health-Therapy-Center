@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -39,6 +40,7 @@ public class SignUpController implements Initializable {
     private Label lblError;
 
     private final UserBOImpl userBO = (UserBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+
 
     @FXML
     void navLogInPage(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
@@ -99,5 +101,10 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceRole.getItems().addAll("Admin", "Receptionist");
+    }
+
+    public void navLogIn(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogIn.fxml")));
+
     }
 }

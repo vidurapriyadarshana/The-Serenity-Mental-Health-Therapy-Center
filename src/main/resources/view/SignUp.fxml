@@ -137,7 +137,7 @@
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="#4a6bff" onMouseClicked="#navLogInPage" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="Sign in">
+                  <Text fill="#4a6bff" onMouseClicked="#navLogIn" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="Sign in">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
